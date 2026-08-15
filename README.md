@@ -12,9 +12,12 @@
 </p>
 
 <p align="center">
-  <img src="screenshots/1.PNG" width="300" alt="Today's prayer times with a countdown to the next one">
-  <img src="screenshots/7.PNG" width="300" alt="The athan window, with a single Stop button">
+  <a href="https://github.com/nandxorandor/Athan-Desktop/releases/latest/download/Athan.exe">
+    <img src="screenshots/1.PNG" height="560" alt="Click to download Athan.exe — today's prayer times with a countdown to the next one">
+  </a>
 </p>
+
+<p align="center"><sub><b>Click the image to download.</b> One file, nothing to install.</sub></p>
 
 ---
 
@@ -99,18 +102,30 @@ Dates come from the Umm al-Qura calendar, which is calculated rather than
 sighted, so your local mosque may begin or end the month a day either side —
 the printout says so on it.
 
+<p align="center">
+  <img src="screenshots/8.PNG" width="700" alt="The generated Word document: all 29 days of Ramadan on a single page, with suhoor and iftar picked out in green">
+</p>
+
+<p align="center"><sub>The saved <code>.docx</code> — the whole month on one page, suhoor and iftar picked out, Fridays shaded.</sub></p>
+
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/2.PNG" width="280" alt="Settings: athan sound per prayer, volume, calculation method and madhab">
-  <img src="screenshots/3.PNG" width="280" alt="Settings: time adjustment, start with Windows, and the About section">
+  <img src="screenshots/2.PNG" height="430" alt="Settings: athan sound per prayer, volume, calculation method and madhab">
+  <img src="screenshots/3.PNG" height="430" alt="Settings: time adjustment, start with Windows, Ramadan and About">
+  <img src="screenshots/6.PNG" height="430" alt="About: version, contact details and the privacy statement">
 </p>
+
 <p align="center">
-  <img src="screenshots/4.PNG" width="300" alt="Resources and credits: every recording with its reciter and source">
-  <img src="screenshots/6.PNG" width="270" alt="About: version, contact details and the privacy statement">
+  <img src="screenshots/4.PNG" height="480" alt="Resources and credits: every recording with its reciter and source">
+  <img src="screenshots/5.PNG" height="480" alt="Resources and credits, scrolled further down the list">
 </p>
 
 <p align="center"><sub>The credits screen is generated from the shipped audio index, so it cannot list a recording the app does not have.</sub></p>
+
+<p align="center">
+  <img src="screenshots/7.PNG" height="280" alt="The athan window at prayer time, with a single Stop button">
+</p>
 
 ## Download
 
