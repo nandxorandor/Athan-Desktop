@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!-- The Windows 10 SDK projection, for Windows.Devices.Geolocation: a
+         bundled city list can never cover everywhere, and asking the OS where it
+         is works anywhere in the world. -->
+    <TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <!-- The tray icon: WPF has none of its own, and NotifyIcon is the only
+         thing on Windows that puts an app in the notification area. -->
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Assets\athan.ico</ApplicationIcon>
+    <AssemblyName>Athan</AssemblyName>
+    <RootNamespace>AthanDesktop</RootNamespace>
+    <Version>1.0.0</Version>
+    <Product>Athan</Product>
+    <Company>Ahmed Khalaf</Company>
+
+    <!-- One downloadable file, which is the whole point of the desktop build.
+         The recordings are embedded rather than shipped alongside, so there is
+         no folder to keep together and nothing to lose. -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <!-- MP3s are already compressed; asking for more only slows startup. -->
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Adhan" Version="0.9.0" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Copied from the Android app's assets by tools/sync-desktop-audio.ps1,
+         so both platforms ship the same recordings and the same index. -->
+    <EmbeddedResource Include="Assets\athan\**\*.mp3" />
+    <EmbeddedResource Include="Assets\athan\index.tsv" />
+    <EmbeddedResource Include="Assets\cities.tsv" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,34 @@
+﻿<Window x:Class="AthanDesktop.SoundPickerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Athan sound" Height="600" Width="460"
+        Background="{StaticResource Bg}"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        FontFamily="Segoe UI">
+
+    <Grid Margin="22,18,22,18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" x:Name="Explainer" Style="{StaticResource Dim}"
+                   TextWrapping="Wrap" Margin="0,0,0,12"/>
+
+        <ListBox Grid.Row="1" x:Name="SoundList" SelectionChanged="Sound_Changed"/>
+
+        <Grid Grid.Row="2" Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Use a file from this PC..." Click="Browse_Click"
+                    HorizontalAlignment="Left"/>
+            <Button Grid.Column="1" Content="Stop" Click="Stop_Click" Margin="8,0,8,0" MinWidth="70"/>
+            <Button Grid.Column="2" Content="Done" Click="Done_Click"
+                    Style="{StaticResource PrimaryButton}" MinWidth="90"/>
+        </Grid>
+    </Grid>
+</Window>

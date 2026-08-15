@@ -1,0 +1,27 @@
+<Window x:Class="AthanDesktop.AthanWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Athan" Height="340" Width="440"
+        Background="{StaticResource Bg}" FontFamily="Segoe UI"
+        WindowStartupLocation="CenterScreen"
+        Topmost="True" ResizeMode="NoResize" ShowInTaskbar="True">
+
+    <Grid>
+        <Border Background="{StaticResource HeaderGlow}"/>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="IT'S TIME FOR" FontSize="12" FontWeight="Bold"
+                       HorizontalAlignment="Center" Foreground="{StaticResource TextDim}"/>
+            <TextBlock x:Name="PrayerName" FontSize="46" FontWeight="Light"
+                       HorizontalAlignment="Center" Margin="0,6,0,0"
+                       Foreground="{StaticResource Accent}"/>
+            <TextBlock x:Name="ClockText" FontSize="15" HorizontalAlignment="Center"
+                       Margin="0,6,0,0" Foreground="{StaticResource TextDim}"/>
+
+            <!-- One Stop button, on one surface. Two would read as two alarms. -->
+            <Button Content="Stop" Click="Stop_Click" Margin="0,28,0,0"
+                    Style="{StaticResource PrimaryButton}"
+                    Padding="52,12" FontSize="17" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Window>

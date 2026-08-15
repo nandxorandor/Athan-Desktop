@@ -1,0 +1,173 @@
+Mecca	Saudi Arabia	21.4225	39.8262
+Madina	Saudi Arabia	24.4686	39.6142
+Riyadh	Saudi Arabia	24.7136	46.6753
+Jeddah	Saudi Arabia	21.4858	39.1925
+Dammam	Saudi Arabia	26.3927	49.9777
+Cairo	Egypt	30.0444	31.2357
+Alexandria	Egypt	31.2001	29.9187
+Giza	Egypt	30.0131	31.2089
+Luxor	Egypt	25.6872	32.6396
+Dubai	United Arab Emirates	25.2048	55.2708
+Abu Dhabi	United Arab Emirates	24.4539	54.3773
+Sharjah	United Arab Emirates	25.3463	55.4209
+Ajman	United Arab Emirates	25.4052	55.5136
+Doha	Qatar	25.2854	51.5310
+Kuwait City	Kuwait	29.3759	47.9774
+Manama	Bahrain	26.2285	50.5860
+Muscat	Oman	23.5880	58.3829
+Sanaa	Yemen	15.3694	44.1910
+Baghdad	Iraq	33.3152	44.3661
+Basra	Iraq	30.5081	47.7835
+Erbil	Iraq	36.1911	44.0092
+Amman	Jordan	31.9454	35.9284
+Jerusalem	Palestine	31.7683	35.2137
+Gaza	Palestine	31.5017	34.4668
+Ramallah	Palestine	31.9038	35.2034
+Beirut	Lebanon	33.8938	35.5018
+Damascus	Syria	33.5138	36.2765
+Aleppo	Syria	36.2021	37.1343
+Istanbul	Turkey	41.0082	28.9784
+Ankara	Turkey	39.9334	32.8597
+Izmir	Turkey	38.4237	27.1428
+Bursa	Turkey	40.1826	29.0665
+Konya	Turkey	37.8746	32.4932
+Tehran	Iran	35.6892	51.3890
+Mashhad	Iran	36.2605	59.6168
+Karachi	Pakistan	24.8607	67.0011
+Lahore	Pakistan	31.5204	74.3587
+Islamabad	Pakistan	33.6844	73.0479
+Peshawar	Pakistan	34.0151	71.5249
+Faisalabad	Pakistan	31.4504	73.1350
+Delhi	India	28.6139	77.2090
+Mumbai	India	19.0760	72.8777
+Hyderabad	India	17.3850	78.4867
+Bengaluru	India	12.9716	77.5946
+Kolkata	India	22.5726	88.3639
+Chennai	India	13.0827	80.2707
+Lucknow	India	26.8467	80.9462
+Dhaka	Bangladesh	23.8103	90.4125
+Chattogram	Bangladesh	22.3569	91.7832
+Kabul	Afghanistan	34.5553	69.2075
+Tashkent	Uzbekistan	41.2995	69.2401
+Almaty	Kazakhstan	43.2220	76.8512
+Baku	Azerbaijan	40.4093	49.8671
+Tbilisi	Georgia	41.7151	44.8271
+Kuala Lumpur	Malaysia	3.1390	101.6869
+Johor Bahru	Malaysia	1.4927	103.7414
+Singapore	Singapore	1.3521	103.8198
+Jakarta	Indonesia	-6.2088	106.8456
+Surabaya	Indonesia	-7.2575	112.7521
+Bandung	Indonesia	-6.9175	107.6191
+Medan	Indonesia	3.5952	98.6722
+Brunei	Brunei	4.9031	114.9398
+Manila	Philippines	14.5995	120.9842
+Bangkok	Thailand	13.7563	100.5018
+Casablanca	Morocco	33.5731	-7.5898
+Rabat	Morocco	34.0209	-6.8416
+Marrakesh	Morocco	31.6295	-7.9811
+Fez	Morocco	34.0181	-5.0078
+Algiers	Algeria	36.7538	3.0588
+Oran	Algeria	35.6971	-0.6308
+Tunis	Tunisia	36.8065	10.1815
+Tripoli	Libya	32.8872	13.1913
+Khartoum	Sudan	15.5007	32.5599
+Mogadishu	Somalia	2.0469	45.3182
+Addis Ababa	Ethiopia	9.0300	38.7400
+Nairobi	Kenya	-1.2921	36.8219
+Dar es Salaam	Tanzania	-6.7924	39.2083
+Kampala	Uganda	0.3476	32.5825
+Lagos	Nigeria	6.5244	3.3792
+Kano	Nigeria	12.0022	8.5920
+Abuja	Nigeria	9.0765	7.3986
+Accra	Ghana	5.6037	-0.1870
+Dakar	Senegal	14.7167	-17.4677
+Bamako	Mali	12.6392	-8.0029
+Johannesburg	South Africa	-26.2041	28.0473
+Cape Town	South Africa	-33.9249	18.4241
+London	United Kingdom	51.5074	-0.1278
+Birmingham	United Kingdom	52.4862	-1.8904
+Manchester	United Kingdom	53.4808	-2.2426
+Bradford	United Kingdom	53.7960	-1.7594
+Leicester	United Kingdom	52.6369	-1.1398
+Glasgow	United Kingdom	55.8642	-4.2518
+Dublin	Ireland	53.3498	-6.2603
+Paris	France	48.8566	2.3522
+Marseille	France	43.2965	5.3698
+Lyon	France	45.7640	4.8357
+Berlin	Germany	52.5200	13.4050
+Hamburg	Germany	53.5511	9.9937
+Munich	Germany	48.1351	11.5820
+Cologne	Germany	50.9375	6.9603
+Frankfurt	Germany	50.1109	8.6821
+Amsterdam	Netherlands	52.3676	4.9041
+Rotterdam	Netherlands	51.9244	4.4777
+Brussels	Belgium	50.8503	4.3517
+Vienna	Austria	48.2082	16.3738
+Zurich	Switzerland	47.3769	8.5417
+Stockholm	Sweden	59.3293	18.0686
+Oslo	Norway	59.9139	10.7522
+Copenhagen	Denmark	55.6761	12.5683
+Helsinki	Finland	60.1699	24.9384
+Madrid	Spain	40.4168	-3.7038
+Barcelona	Spain	41.3874	2.1686
+Lisbon	Portugal	38.7223	-9.1393
+Rome	Italy	41.9028	12.4964
+Milan	Italy	45.4642	9.1900
+Athens	Greece	37.9838	23.7275
+Sarajevo	Bosnia and Herzegovina	43.8563	18.4131
+Pristina	Kosovo	42.6629	21.1655
+Tirana	Albania	41.3275	19.8187
+Skopje	North Macedonia	41.9981	21.4254
+Sofia	Bulgaria	42.6977	23.3219
+Bucharest	Romania	44.4268	26.1025
+Warsaw	Poland	52.2297	21.0122
+Prague	Czechia	50.0755	14.4378
+Budapest	Hungary	47.4979	19.0402
+Moscow	Russia	55.7558	37.6173
+Kazan	Russia	55.7963	49.1088
+Saint Petersburg	Russia	59.9311	30.3609
+Kyiv	Ukraine	50.4501	30.5234
+New York	United States	40.7128	-74.0060
+Brooklyn	United States	40.6782	-73.9442
+Chicago	United States	41.8781	-87.6298
+Dearborn	United States	42.3223	-83.1763
+Detroit	United States	42.3314	-83.0458
+Houston	United States	29.7604	-95.3698
+Dallas	United States	32.7767	-96.7970
+Los Angeles	United States	34.0522	-118.2437
+San Francisco	United States	37.7749	-122.4194
+San Diego	United States	32.7157	-117.1611
+Seattle	United States	47.6062	-122.3321
+Phoenix	United States	33.4484	-112.0740
+Denver	United States	39.7392	-104.9903
+Minneapolis	United States	44.9778	-93.2650
+Columbus	United States	39.9612	-82.9988
+Atlanta	United States	33.7490	-84.3880
+Philadelphia	United States	39.9526	-75.1652
+Boston	United States	42.3601	-71.0589
+Washington	United States	38.9072	-77.0369
+Baltimore	United States	39.2904	-76.6122
+Lexington Park	United States	38.2673	-76.4544
+Leonardtown	United States	38.2915	-76.6358
+California	United States	38.3007	-76.5033
+Miami	United States	25.7617	-80.1918
+Orlando	United States	28.5383	-81.3792
+Tampa	United States	27.9506	-82.4572
+Charlotte	United States	35.2271	-80.8431
+Nashville	United States	36.1627	-86.7816
+Austin	United States	30.2672	-97.7431
+Toronto	Canada	43.6532	-79.3832
+Mississauga	Canada	43.5890	-79.6441
+Montreal	Canada	45.5019	-73.5674
+Ottawa	Canada	45.4215	-75.6972
+Calgary	Canada	51.0447	-114.0719
+Edmonton	Canada	53.5461	-113.4938
+Vancouver	Canada	49.2827	-123.1207
+Mexico City	Mexico	19.4326	-99.1332
+Sao Paulo	Brazil	-23.5505	-46.6333
+Buenos Aires	Argentina	-34.6037	-58.3816
+Sydney	Australia	-33.8688	151.2093
+Melbourne	Australia	-37.8136	144.9631
+Perth	Australia	-31.9505	115.8605
+Brisbane	Australia	-27.4698	153.0251
+Auckland	New Zealand	-36.8485	174.7633

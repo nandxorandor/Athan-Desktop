@@ -1,0 +1,15 @@
+# Build output
+bin/
+obj/
+*.user
+
+# The published single-file exe is ~105 MB, which is over GitHub's 100 MB limit
+# for a file in a repository. It belongs on the Releases page as an attached
+# asset, never committed here.
+dist/
+*.exe
+*.pdb
+
+# Signing material never belongs in the tree.
+*.pfx
+*.snk

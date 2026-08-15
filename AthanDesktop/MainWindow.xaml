@@ -1,0 +1,69 @@
+<Window x:Class="AthanDesktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Athan" Height="680" Width="440"
+        Background="{StaticResource Bg}"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize" FontFamily="Segoe UI">
+
+    <Grid>
+        <!-- A faint glow behind the header, so the countdown sits in something
+             rather than floating on a flat rectangle. -->
+        <Border Background="{StaticResource HeaderGlow}" Height="260" VerticalAlignment="Top"/>
+
+        <Grid Margin="22,18,22,18">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Location: clicking it is how you change it, as on the phone. -->
+            <Border Grid.Row="0" Background="Transparent" Cursor="Hand"
+                    MouseLeftButtonUp="Location_Click" Padding="4,2">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE81D;" FontFamily="Segoe MDL2 Assets" FontSize="15"
+                               Foreground="{StaticResource Accent}" VerticalAlignment="Center"
+                               Margin="0,0,8,0"/>
+                    <StackPanel>
+                        <TextBlock x:Name="CityName" FontSize="19" FontWeight="SemiBold"
+                                   Foreground="{StaticResource Text}" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock x:Name="HijriDate" FontSize="12.5"
+                                   Foreground="{StaticResource Sunrise}" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- The countdown is the reason the window is open; give it the room. -->
+            <StackPanel Grid.Row="1" Margin="0,22,0,0" HorizontalAlignment="Center">
+                <TextBlock x:Name="NextLabel" FontSize="12" HorizontalAlignment="Center"
+                           Foreground="{StaticResource TextDim}" Text="NEXT PRAYER" FontWeight="Bold"/>
+                <TextBlock x:Name="NextPrayer" FontSize="34" HorizontalAlignment="Center"
+                           Margin="0,4,0,0" FontWeight="Light"
+                           Foreground="{StaticResource Accent}"/>
+                <TextBlock x:Name="NextAt" FontSize="13" HorizontalAlignment="Center"
+                           Margin="0,2,0,0" Foreground="{StaticResource TextDim}"/>
+            </StackPanel>
+
+            <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0,20,0,0" Padding="14,8">
+                <ItemsControl x:Name="TimesList"/>
+            </Border>
+
+            <StackPanel Grid.Row="3" Margin="0,14,0,0">
+                <TextBlock x:Name="QiblaLine" Style="{StaticResource Dim}"
+                           HorizontalAlignment="Center" Margin="0,0,0,12"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="Settings" Click="Settings_Click" Margin="0,0,5,0"/>
+                    <Button Grid.Column="1" Content="Credits" Click="Credits_Click" Margin="5,0,5,0"/>
+                    <Button Grid.Column="2" Content="Test athan" Click="Test_Click" Margin="5,0,0,0"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
