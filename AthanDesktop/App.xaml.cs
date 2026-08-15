@@ -21,9 +21,14 @@ public partial class App : Application
     private DispatcherTimer? _timer;
     private MainWindow? _main;
     private AthanWindow? _athanWindow;
+    private RamadanWindow? _ramadanWindow;
 
     /// <summary>The prayer we are currently counting down to.</summary>
     private Upcoming? _next;
+
+    /// <summary>The day the Ramadan offer was last considered, so it is checked
+    /// once a day rather than on every one-second tick.</summary>
+    private DateTime _ramadanCheckedOn = DateTime.MinValue;
 
     private const string RunKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
     private const string RunValue = "Athan";
@@ -83,6 +88,8 @@ public partial class App : Application
         var menu = new Forms.ContextMenuStrip();
         menu.Items.Add("Open Athan", null, (_, _) => ShowMain());
         menu.Items.Add("Settings", null, (_, _) => { ShowMain(); _main?.OpenSettings(); });
+        menu.Items.Add("Ramadan calendar", null,
+            (_, _) => ShowRamadan(RamadanCalendar.UpcomingHijriYear()));
         menu.Items.Add("About", null, (_, _) => new AboutWindow().ShowDialog());
         menu.Items.Add(new Forms.ToolStripSeparator());
         menu.Items.Add("Stop athan", null, (_, _) => StopAthan());
@@ -140,6 +147,7 @@ public partial class App : Application
     private void OnTick(object? sender, EventArgs e)
     {
         _main?.Tick();
+        MaybeOfferRamadanCalendar();
 
         if (_next is null)
         {
@@ -158,6 +166,47 @@ public partial class App : Application
         {
             UpdateTrayText();
         }
+    }
+
+    // ---- Ramadan -----------------------------------------------------------
+
+    /// <summary>
+    /// Offers the month calendar as Ramadan comes round, then stays quiet. The
+    /// whole point of the feature is that it surfaces itself - nobody thinks to
+    /// go looking for a timetable until the first fast is on them - so the bar
+    /// for not being a nuisance is high: once per Ramadan at most, only inside
+    /// the fortnight before it, only with a location set, and never while an
+    /// athan window is on screen.
+    /// </summary>
+    private void MaybeOfferRamadanCalendar()
+    {
+        if (_ramadanCheckedOn.Date == DateTime.Today) return;
+        _ramadanCheckedOn = DateTime.Today;
+
+        if (!Settings.RamadanPromptEnabled || !Settings.HasLocation) return;
+        if (_athanWindow is not null || _ramadanWindow is not null) return;
+
+        var year = RamadanCalendar.UpcomingHijriYear();
+        if (year == 0 || Settings.RamadanPromptDismissedYear == year) return;
+        if (!RamadanCalendar.IsSeason(year)) return;
+
+        ShowRamadan(year, fromPrompt: true);
+    }
+
+    public void ShowRamadan(int hijriYear, bool fromPrompt = false)
+    {
+        if (_ramadanWindow is not null)
+        {
+            _ramadanWindow.Activate();
+            return;
+        }
+        _ramadanWindow = new RamadanWindow(hijriYear, fromPrompt)
+        {
+            Owner = _main is { IsVisible: true } ? _main : null,
+        };
+        _ramadanWindow.Closed += (_, _) => _ramadanWindow = null;
+        _ramadanWindow.Show();
+        _ramadanWindow.Activate();
     }
 
     // ---- the athan ---------------------------------------------------------

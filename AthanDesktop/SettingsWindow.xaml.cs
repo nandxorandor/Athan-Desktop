@@ -26,6 +26,7 @@ public partial class SettingsWindow : Window
         VolumeSlider.Value = App.Settings.Volume;
         AdjustSlider.Value = App.Settings.AdjustmentMinutes;
         StartupCheck.IsChecked = App.IsStartWithWindows();
+        RamadanPromptCheck.IsChecked = App.Settings.RamadanPromptEnabled;
 
         _loading = false;
         Refresh();
@@ -36,6 +37,7 @@ public partial class SettingsWindow : Window
         FajrSoundButton.Content = App.Catalog.LabelFor(App.Catalog.ResolveFajr(App.Settings));
         OtherSoundButton.Content = App.Catalog.LabelFor(App.Catalog.ResolveGeneral(App.Settings));
         VolumeLabel.Text = $"Volume — {App.Settings.Volume}%";
+        RamadanWhen.Text = RamadanSummary();
         AdjustLabel.Text = App.Settings.AdjustmentMinutes switch
         {
             0 => "Time adjustment — none",
@@ -109,6 +111,39 @@ public partial class SettingsWindow : Window
         var on = StartupCheck.IsChecked == true;
         App.SetStartWithWindows(on);
         App.Settings.StartWithWindows = on;
+        App.Settings.Save();
+    }
+
+    /// <summary>Says when the next Ramadan falls, so the button is not a blind door.</summary>
+    private static string RamadanSummary()
+    {
+        var year = RamadanCalendar.UpcomingHijriYear();
+        if (year == 0) return "The Umm al-Qura calendar is unavailable on this system.";
+        var first = RamadanCalendar.FirstDay(year);
+        if (first is null) return "";
+        var days = RamadanCalendar.DaysIn(year);
+        var last = first.Value.AddDays(days - 1);
+        var away = (first.Value.Date - DateTime.Today).Days;
+        var when = away switch
+        {
+            > 1 => $"in {away} days",
+            1 => "tomorrow",
+            0 => "today",
+            _ => "under way",
+        };
+        return $"Ramadan {year} AH begins {when} — {first.Value:d MMMM yyyy} to {last:d MMMM yyyy}, {days} days.";
+    }
+
+    private void Ramadan_Click(object sender, RoutedEventArgs e) =>
+        ((App)Application.Current).ShowRamadan(RamadanCalendar.UpcomingHijriYear());
+
+    private void RamadanPrompt_Changed(object sender, RoutedEventArgs e)
+    {
+        if (_loading) return;
+        App.Settings.RamadanPromptEnabled = RamadanPromptCheck.IsChecked == true;
+        // Re-enabling clears any "don't ask again", otherwise the switch would
+        // appear to do nothing for the rest of the year it was dismissed in.
+        if (App.Settings.RamadanPromptEnabled) App.Settings.RamadanPromptDismissedYear = 0;
         App.Settings.Save();
     }
 

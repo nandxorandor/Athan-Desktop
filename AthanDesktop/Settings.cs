@@ -65,6 +65,16 @@ public class Settings
     /// <summary>Closing the window hides to the tray rather than quitting; shown once.</summary>
     public bool TrayNoticeSeen { get; set; }
 
+    /// <summary>Offer a month calendar as Ramadan comes round.</summary>
+    public bool RamadanPromptEnabled { get; set; } = true;
+
+    /// <summary>
+    /// The Hijri year whose offer was dismissed. Stored as a year rather than a
+    /// flag so "don't ask again" lapses on its own next Ramadan, instead of
+    /// silently switching the feature off for good.
+    /// </summary>
+    public int RamadanPromptDismissedYear { get; set; }
+
     [JsonIgnore]
     public bool HasLocation => !double.IsNaN(Latitude) && !double.IsNaN(Longitude);
 

@@ -56,6 +56,22 @@
                     </StackPanel>
                 </Border>
 
+                <TextBlock Text="RAMADAN" Style="{StaticResource SectionHeading}" Margin="0,20,0,10"/>
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <Button Content="Ramadan calendar…" Style="{StaticResource RowButton}"
+                                Click="Ramadan_Click"/>
+                        <TextBlock x:Name="RamadanWhen" Style="{StaticResource Dim}" Margin="2,8,0,0"
+                                   Foreground="{StaticResource TextFaint}" TextWrapping="Wrap"/>
+                        <CheckBox x:Name="RamadanPromptCheck" Margin="0,14,0,0"
+                                  Content="Offer this automatically each Ramadan"
+                                  Checked="RamadanPrompt_Changed" Unchecked="RamadanPrompt_Changed"/>
+                        <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="30,6,0,0"
+                                   Foreground="{StaticResource TextFaint}"
+                                   Text="Asks once, in the fortnight before the first fast, whether you want the month's timetable. Dismissing it only silences that year."/>
+                    </StackPanel>
+                </Border>
+
                 <TextBlock Text="ABOUT" Style="{StaticResource SectionHeading}" Margin="0,20,0,10"/>
                 <Border Style="{StaticResource Card}" Padding="18,10">
                     <StackPanel>

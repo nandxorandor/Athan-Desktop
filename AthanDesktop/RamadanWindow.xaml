@@ -1,0 +1,58 @@
+<Window x:Class="AthanDesktop.RamadanWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ramadan calendar" Height="640" Width="620"
+        Background="{StaticResource Bg}" FontFamily="Segoe UI"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid>
+        <Border Background="{StaticResource HeaderGlow}" Height="170" VerticalAlignment="Top"/>
+
+        <Grid Margin="22,18,22,18">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <TextBlock x:Name="Heading" FontSize="28" FontWeight="Light"
+                           Foreground="{StaticResource Accent}"/>
+                <TextBlock x:Name="SubHeading" Style="{StaticResource Dim}" Margin="0,4,0,0"/>
+                <TextBlock x:Name="Intro" Style="{StaticResource Dim}" TextWrapping="Wrap"
+                           Margin="0,10,0,0" Visibility="Collapsed"
+                           Foreground="{StaticResource Text}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,16,0,0">
+                <TextBlock Text="Year" Style="{StaticResource Dim}" VerticalAlignment="Center"
+                           Margin="0,0,10,0"/>
+                <ComboBox x:Name="YearBox" Width="150" SelectionChanged="Year_Changed"/>
+            </StackPanel>
+
+            <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0,14,0,0" Padding="6,6">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="Preview"/>
+                </ScrollViewer>
+            </Border>
+
+            <CheckBox Grid.Row="3" x:Name="DontAsk" Margin="2,14,0,0" Visibility="Collapsed"
+                      Content="Don't ask me again for this Ramadan"/>
+
+            <Grid Grid.Row="4" Margin="0,16,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Save as spreadsheet (.csv)" Click="Csv_Click"
+                        HorizontalAlignment="Left"/>
+                <Button Grid.Column="1" Content="Close" Click="Close_Click" Margin="8,0,8,0" MinWidth="80"/>
+                <Button Grid.Column="2" x:Name="SaveButton" Content="Save as Word (.docx)"
+                        Click="Docx_Click" Style="{StaticResource PrimaryButton}" MinWidth="160"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

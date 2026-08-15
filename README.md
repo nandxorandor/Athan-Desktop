@@ -32,6 +32,7 @@
 - **الأذان في وقته** — تظهر نافذة لا تُخطئها العين، وفيها زرّ إيقاف واحد لا غير.
 - **ثلاثة أوضاع لكل صلاة**، تُبدَّل بنقرة على سطر الصلاة: **صوت** (نافذة وتسجيل)، و**تنبيه** (نافذة بلا صوت)، و**صامت** (لا شيء).
 - **يعمل في شريط الإشعارات** — إغلاق النافذة لا يُنهي التطبيق، بل يبقى منتظرًا الصلاة التالية. ويبدأ مع تشغيل ويندوز تلقائيًا، ويمكنك تعطيل ذلك من الإعدادات.
+- **تقويم رمضان** — جدول لشهر رمضان كاملًا: يوم الصيام، والتاريخ، ونهاية السحور، والشروق، والظهر، والعصر، والإفطار، والعشاء. يُحفَظ ملفَّ وورد (`.docx`) مُهيَّأً ليُطبع **في صفحة واحدة**، أو ملفَّ جدول بيانات (`.csv`). ويعرض التطبيق نفسه عليك تلقائيًا في الأسبوعين السابقين لأول يوم من رمضان، مرّةً واحدة لا غير، ويمكن تعطيل ذلك من الإعدادات.
 - **اتجاه القبلة** بالدرجات من موقعك، مع المسافة إلى مكة.
 - **التاريخ الهجري** من تقويم أم القرى المضمَّن في ويندوز.
 
@@ -75,8 +76,28 @@ agree to the minute.
 - **Runs in the notification area.** Closing the window does not quit it; it
   keeps waiting for the next prayer. Starts with Windows by default, hidden in
   the tray — untick that in Settings if you would rather it did not.
+- **Ramadan calendar** — the whole month as a table, saved as a **one-page**
+  `.docx` to print, or a `.csv` for a spreadsheet. Offered automatically as
+  Ramadan comes round.
 - **Qibla bearing** from your coordinates, with the distance to Mecca.
 - **Hijri date**, from the Umm al-Qura calendar Windows already ships.
+
+## The Ramadan calendar
+
+Ramadan is the one month people want every day's times at once, the night
+before, rather than just today's. **Settings → Ramadan → Ramadan calendar…**
+(also on the tray menu) shows the whole month — day of the fast, date, suhoor
+ends, sunrise, Dhuhr, Asr, iftar, Isha, with Fridays shaded — and saves it as a
+Word document laid out to land on **one page**, ready for the fridge door. A CSV
+is there too if you would rather have it in a spreadsheet.
+
+You do not have to remember it exists: in the fortnight before the first fast,
+the app offers it once, and only once. Dismissing that offer silences it for
+that year alone, not for good. The whole thing can be switched off in Settings.
+
+Dates come from the Umm al-Qura calendar, which is calculated rather than
+sighted, so your local mosque may begin or end the month a day either side —
+the printout says so on it.
 
 ## Screenshots
 
@@ -165,6 +186,7 @@ app's assets, index and all, so both platforms ship the same catalogue.
 | Vibrate mode | yes | replaced by **Popup** — window, no sound |
 | Pre-prayer heads-up | yes | not yet |
 | Downloaded athans | browse and import | pick any MP3 on the PC |
+| Ramadan calendar | — | one-page `.docx` or `.csv`, offered each Ramadan |
 
 ## Licence
 
