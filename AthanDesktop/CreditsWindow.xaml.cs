@@ -63,10 +63,18 @@ public partial class CreditsWindow : Window
     {
         if (sound.Category == "developer" || sound.Key.EndsWith("Developer_Athan-3_Fajr.mp3", StringComparison.Ordinal))
             return "Recorded by the developer";
-        if (!string.IsNullOrWhiteSpace(sound.Source))
+        if (IsReadable(sound.Source))
             return "Source: " + Tidy(sound.Source);
         return "Source: islamweb.net (reciter not named in the recording)";
     }
+
+    /// <summary>
+    /// A few recordings carry an ID3 tag in an encoding that could not be
+    /// recovered, and arrive as replacement characters. Showing a row of
+    /// diamonds as someone's credit is worse than admitting the tag is missing.
+    /// </summary>
+    private static bool IsReadable(string source) =>
+        !string.IsNullOrWhiteSpace(source) && !source.Contains('�');
 
     /// <summary>Tags carry things like "www.islamweb.net\&lt;Arabic name&gt;"; show one line.</summary>
     private static string Tidy(string source) =>

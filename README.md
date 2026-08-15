@@ -11,13 +11,59 @@
   <img src="https://img.shields.io/badge/code-MIT-4FC79A?style=flat-square" alt="MIT licence for the code">
 </p>
 
+<p align="center">
+  <img src="screenshots/1.PNG" width="300" alt="Today's prayer times with a countdown to the next one">
+  <img src="screenshots/7.PNG" width="300" alt="The athan window, with a single Stop button">
+</p>
+
 ---
+
+<div dir="rtl" align="right">
+
+## نبذة عن التطبيق
+
+**آذان لويندوز** تطبيق مجاني خفيف لمواقيت الصلاة على الحاسوب، يعمل بالكامل على جهازك دون حاجة إلى إنترنت أو حساب. لا إعلانات فيه، ولا يجمع أي بيانات، ولا يرسل شيئًا إلى أي خادم. وهو رفيق [تطبيق آذان لأندرويد](https://github.com/nandxorandor/Athan): المكتبة الحسابية نفسها والتسجيلات نفسها، فتتطابق المواقيت بين الجهازين إلى الدقيقة.
+
+**ملف واحد فقط.** نزّل `Athan.exe` وشغّله؛ لا تنصيب ولا فكّ ضغط — فبيئة التشغيل والتسجيلات التسعة والعشرون كلّها بداخل الملف نفسه.
+
+### ما الذي يقدّمه
+
+- **مواقيت الصلاة دون إنترنت** — تُحسب على الجهاز نفسه اعتمادًا على إحداثيات موقعك، مع إمكانية اختيار طريقة الحساب والمذهب، وتعديل يدوي حتى 120 دقيقة زيادةً أو نقصًا إن اختلف توقيت مسجدك المحلي عن الحساب.
+- **الأذان في وقته** — تظهر نافذة لا تُخطئها العين، وفيها زرّ إيقاف واحد لا غير.
+- **ثلاثة أوضاع لكل صلاة**، تُبدَّل بنقرة على سطر الصلاة: **صوت** (نافذة وتسجيل)، و**تنبيه** (نافذة بلا صوت)، و**صامت** (لا شيء).
+- **يعمل في شريط الإشعارات** — إغلاق النافذة لا يُنهي التطبيق، بل يبقى منتظرًا الصلاة التالية. ويبدأ مع تشغيل ويندوز تلقائيًا، ويمكنك تعطيل ذلك من الإعدادات.
+- **اتجاه القبلة** بالدرجات من موقعك، مع المسافة إلى مكة.
+- **التاريخ الهجري** من تقويم أم القرى المضمَّن في ويندوز.
+
+### تحديد الموقع
+
+ثلاث طرق: **«تحديد موقعي»** يسأل ويندوز عن موقع الجهاز ويعمل في أي مكان في العالم (يتطلّب تفعيل خدمة الموقع في إعدادات ويندوز)، أو اختيار مدينة من القائمة المضمَّنة، أو إدخال خطّي الطول والعرض مباشرةً لأي مكان لا تبلغه القائمة. وفي كل الأحوال تُحفظ الإحداثيات في ملفّك الشخصي على الجهاز وحده ولا تغادره.
+
+### عن تسجيلات الأذان
+
+يضمّ التطبيق 29 تسجيلًا. ثلاثة منها بصوتي أنا، وبقيّتها ممّا نشره موقع **إسلام ويب**، وقد أذِن الموقع في [الفتوى رقم 379009](https://www.islamweb.net/en/fatwa/379009/) بالانتفاع بمواده لغير أغراض تجاريّة بشرط ذكر المصدر ونسبته إليه — والتطبيق مجاني بلا إعلانات ولا مبيعات، وكلّ تسجيل منسوب إلى قارئه ومصدره في شاشة «المصادر والشكر» داخل الإعدادات.
+
+وما لم يُؤذن فيه لم أُضمّنه: تسجيلات الحرمين من بثّ التلفزيون السعودي ليست ملكًا لإسلام ويب حتى يأذن فيها، فتُركت خارج التطبيق.
+
+### الخصوصية
+
+لا يجمع التطبيق أي بيانات ولا يرسل شيئًا خارج الجهاز: لا تتبُّع، ولا إعلانات، ولا اتصال بالشبكة أصلًا. تُحفظ الإعدادات في `%APPDATA%\Athan` وحدها.
+
+### التحميل والتثبيت
+
+نزّل ملف `Athan.exe` من صفحة [الإصدارات](../../releases) وشغّله. سيُظهر ويندوز تحذير SmartScreen في أول مرة لأنّ الملف غير موقَّع بشهادة مدفوعة: اضغط **More info ← Run anyway**. ومعنى التحذير أنّ ويندوز لم يرَ هذا الملف من قبل، لا أنّه وجد فيه شيئًا. يتطلّب ويندوز 10 (إصدار 19041) فأحدث بنواة 64-بت، وحجمه نحو 105 ميجابايت.
+
+</div>
+
+---
+
+## In English
 
 The desktop companion to [Athan for Android](https://github.com/nandxorandor/Athan).
 Same prayer-time library, same 29 bundled recordings, same credits — so the two
 agree to the minute.
 
-## What it does
+### What it does
 
 - **Prayer times calculated offline**, with the [adhan](https://github.com/batoulapps/adhan-java)
   library. Calculation method and madhab are selectable, plus a ±120-minute
@@ -27,9 +73,23 @@ agree to the minute.
 - **Three modes per prayer**, clicked on the row itself:
   **Sound** (window and recording) · **Popup** (window only) · **Silent** (nothing).
 - **Runs in the notification area.** Closing the window does not quit it; it
-  keeps waiting for the next prayer. Optionally starts when you sign in.
+  keeps waiting for the next prayer. Starts with Windows by default, hidden in
+  the tray — untick that in Settings if you would rather it did not.
 - **Qibla bearing** from your coordinates, with the distance to Mecca.
 - **Hijri date**, from the Umm al-Qura calendar Windows already ships.
+
+## Screenshots
+
+<p align="center">
+  <img src="screenshots/2.PNG" width="280" alt="Settings: athan sound per prayer, volume, calculation method and madhab">
+  <img src="screenshots/3.PNG" width="280" alt="Settings: time adjustment, start with Windows, and the About section">
+</p>
+<p align="center">
+  <img src="screenshots/4.PNG" width="300" alt="Resources and credits: every recording with its reciter and source">
+  <img src="screenshots/6.PNG" width="270" alt="About: version, contact details and the privacy statement">
+</p>
+
+<p align="center"><sub>The credits screen is generated from the shipped audio index, so it cannot list a recording the app does not have.</sub></p>
 
 ## Download
 
