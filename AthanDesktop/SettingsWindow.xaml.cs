@@ -27,6 +27,12 @@ public partial class SettingsWindow : Window
         AdjustSlider.Value = App.Settings.AdjustmentMinutes;
         StartupCheck.IsChecked = App.IsStartWithWindows();
         RamadanPromptCheck.IsChecked = App.Settings.RamadanPromptEnabled;
+        DuaCheck.IsChecked = App.Settings.AfterAthanDuaEnabled;
+        ReminderCheck.IsChecked = App.Settings.ReminderEnabled;
+
+        foreach (var m in new[] { 5, 10, 15, 20, 30 })
+            ReminderMinutesBox.Items.Add(new ComboBoxItem { Content = $"{m} minutes before", Tag = m });
+        SelectMinutes(App.Settings.ReminderMinutes);
 
         _loading = false;
         Refresh();
@@ -38,6 +44,8 @@ public partial class SettingsWindow : Window
         OtherSoundButton.Content = App.Catalog.LabelFor(App.Catalog.ResolveGeneral(App.Settings));
         VolumeLabel.Text = $"Volume — {App.Settings.Volume}%";
         RamadanWhen.Text = RamadanSummary();
+        ReminderMinutesLabel.Text = "How early";
+        ReminderMinutesBox.IsEnabled = App.Settings.ReminderEnabled;
         AdjustLabel.Text = App.Settings.AdjustmentMinutes switch
         {
             0 => "Time adjustment — none",
@@ -113,6 +121,45 @@ public partial class SettingsWindow : Window
         App.Settings.StartWithWindows = on;
         App.Settings.Save();
     }
+
+    private void SelectMinutes(int minutes)
+    {
+        foreach (ComboBoxItem item in ReminderMinutesBox.Items)
+        {
+            if ((int)item.Tag! == minutes) { ReminderMinutesBox.SelectedItem = item; return; }
+        }
+        if (ReminderMinutesBox.Items.Count > 0) ReminderMinutesBox.SelectedIndex = 1;
+    }
+
+    private void Dua_Changed(object sender, RoutedEventArgs e)
+    {
+        if (_loading) return;
+        App.Settings.AfterAthanDuaEnabled = DuaCheck.IsChecked == true;
+        App.Settings.Save();
+    }
+
+    private void Reminder_Changed(object sender, RoutedEventArgs e)
+    {
+        if (_loading) return;
+        App.Settings.ReminderEnabled = ReminderCheck.IsChecked == true;
+        App.Settings.Save();
+        Refresh();
+    }
+
+    private void ReminderMinutes_Changed(object sender, SelectionChangedEventArgs e)
+    {
+        if (_loading) return;
+        if ((ReminderMinutesBox.SelectedItem as ComboBoxItem)?.Tag is not int minutes) return;
+        App.Settings.ReminderMinutes = minutes;
+        App.Settings.Save();
+    }
+
+    /// <summary>
+    /// Seeing it once beats discovering at Fajr that it appears somewhere you
+    /// were not looking, or that the countdown is too quick to read.
+    /// </summary>
+    private void PreviewReminder_Click(object sender, RoutedEventArgs e) =>
+        ((App)Application.Current).PreviewReminder();
 
     /// <summary>Says when the next Ramadan falls, so the button is not a blind door.</summary>
     private static string RamadanSummary()

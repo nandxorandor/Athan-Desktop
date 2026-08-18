@@ -4,7 +4,7 @@
         Title="Athan" Height="340" Width="440"
         Background="{StaticResource Bg}" FontFamily="Segoe UI"
         WindowStartupLocation="CenterScreen"
-        Topmost="True" ResizeMode="NoResize" ShowInTaskbar="True">
+        Topmost="True" ResizeMode="CanMinimize" ShowInTaskbar="True">
 
     <Grid>
         <Border Background="{StaticResource HeaderGlow}"/>

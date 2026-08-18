@@ -30,8 +30,22 @@ public partial class App : Application
     /// once a day rather than on every one-second tick.</summary>
     private DateTime _ramadanCheckedOn = DateTime.MinValue;
 
+    /// <summary>The prayer time a heads-up has already been shown for, so one
+    /// prayer never produces two.</summary>
+    private DateTime _remindedFor = DateTime.MinValue;
+
+    private ReminderWindow? _reminderWindow;
+
+    /// <summary>True between the athan recording ending and the du'aa starting.</summary>
+    private bool _duaPending;
+
+    private DispatcherTimer? _duaDelay;
+
     private const string RunKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
     private const string RunValue = "Athan";
+
+    /// <summary>Catalogue key of the embedded after-athan du'aa.</summary>
+    public const string DuaKey = "dua/after-athan-dua.mp3";
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -42,6 +56,9 @@ public partial class App : Application
         Catalog = new AthanCatalog();
         Engine = new PrayerEngine(Settings);
         Player = new AudioPlayer();
+        // Fires on a pool thread when a recording ends by itself, never when it
+        // is stopped, so reaching here means the athan or the du'aa ran out.
+        Player.Finished += () => Dispatcher.BeginInvoke(OnPlaybackFinished);
 
         ApplyStartupDefault();
         SetUpTray();
@@ -164,9 +181,43 @@ public partial class App : Application
         }
         else
         {
+            MaybeShowReminder(_next);
             UpdateTrayText();
         }
     }
+
+    /// <summary>
+    /// The "be ready" popup, N minutes before the prayer. Keyed on the prayer's
+    /// own time rather than a flag, so it fires once per prayer and re-arms by
+    /// itself for the next one - and so a machine waking from sleep past the
+    /// window does not get a warning about a prayer that has already come.
+    /// </summary>
+    private void MaybeShowReminder(Upcoming next)
+    {
+        if (!Settings.ReminderEnabled || _reminderWindow is not null || _athanWindow is not null) return;
+        if (_remindedFor == next.Time) return;
+
+        var due = next.Time.AddMinutes(-Settings.ReminderMinutes);
+        if (DateTime.Now < due) return;
+
+        _remindedFor = next.Time;
+        _reminderWindow = new ReminderWindow(next.Slot, Settings.ReminderMinutes);
+        _reminderWindow.Closed += (_, _) => _reminderWindow = null;
+        _reminderWindow.Show();
+        _reminderWindow.Activate();
+    }
+
+    private void CloseReminder()
+    {
+        if (_reminderWindow is null) return;
+        var w = _reminderWindow;
+        _reminderWindow = null;
+        w.Close();
+    }
+
+    /// <summary>Settings uses this to show what the popup will look like.</summary>
+    public void PreviewReminder() =>
+        new ReminderWindow(Slot.Dhuhr, Settings.ReminderMinutes).Show();
 
     // ---- Ramadan -----------------------------------------------------------
 
@@ -224,7 +275,20 @@ public partial class App : Application
         // Silent means silent: no recording and no window. Popup means the
         // window without the recording - you still know the time has come.
         if (mode == AthanMode.Silent) return;
-        if (mode == AthanMode.Sound) PlayFor(slot);
+
+        // A heads-up still on screen has done its job; the thing it warned about
+        // has arrived, and two prayer windows at once is one too many.
+        CloseReminder();
+
+        CancelDuaDelay();
+        _duaPending = false;
+        if (mode == AthanMode.Sound)
+        {
+            PlayFor(slot);
+            // The athan and the du'aa are one announcement: the window closes
+            // when the pair is done, not when the athan alone runs out.
+            _duaPending = Settings.AfterAthanDuaEnabled;
+        }
 
         _athanWindow?.Close();
         _athanWindow = new AthanWindow(slot);
@@ -244,6 +308,8 @@ public partial class App : Application
 
     public void StopAthan()
     {
+        CancelDuaDelay();
+        _duaPending = false;
         Player.Stop();
         if (_athanWindow is not null)
         {
@@ -251,6 +317,42 @@ public partial class App : Application
             _athanWindow = null;
             w.Close();
         }
+    }
+
+    /// <summary>
+    /// A recording ended by itself. Only meaningful while the athan window is
+    /// up - the sound picker uses the same player to preview, and a preview
+    /// finishing must not start a du'aa or close anything.
+    /// </summary>
+    private void OnPlaybackFinished()
+    {
+        if (_athanWindow is null) return;
+
+        if (_duaPending)
+        {
+            _duaPending = false;
+            // A breath between the call and the du'aa; running them together
+            // sounds like one clipped recording.
+            _duaDelay = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+            _duaDelay.Tick += (_, _) =>
+            {
+                CancelDuaDelay();
+                if (_athanWindow is null) return; // stopped while we waited
+                var stream = Catalog.Open(DuaKey);
+                if (stream is not null) Player.Play(stream, Settings.Volume);
+                else StopAthan();
+            };
+            _duaDelay.Start();
+            return;
+        }
+
+        StopAthan();
+    }
+
+    private void CancelDuaDelay()
+    {
+        _duaDelay?.Stop();
+        _duaDelay = null;
     }
 
     /// <summary>Preview from the sound picker, at the configured volume.</summary>

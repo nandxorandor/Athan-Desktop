@@ -1,0 +1,27 @@
+<Window x:Class="AthanDesktop.ReminderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Prayer heads-up" Height="300" Width="420"
+        Background="{StaticResource Bg}" FontFamily="Segoe UI"
+        WindowStartupLocation="CenterScreen"
+        Topmost="True" ResizeMode="CanMinimize" ShowInTaskbar="True">
+
+    <Grid>
+        <Border Background="{StaticResource HeaderGlow}"/>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="BE READY" FontSize="12" FontWeight="Bold"
+                       HorizontalAlignment="Center" Foreground="{StaticResource TextDim}"/>
+            <TextBlock x:Name="Message" FontSize="30" FontWeight="Light"
+                       HorizontalAlignment="Center" Margin="0,8,0,0"
+                       TextAlignment="Center" TextWrapping="Wrap"
+                       Foreground="{StaticResource Sunrise}"/>
+            <TextBlock x:Name="AtText" FontSize="14" HorizontalAlignment="Center"
+                       Margin="0,8,0,0" Foreground="{StaticResource TextDim}"/>
+
+            <Button x:Name="CloseButton" Click="Close_Click" Margin="0,24,0,0"
+                    Style="{StaticResource PrimaryButton}"
+                    Padding="38,11" FontSize="16" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Window>

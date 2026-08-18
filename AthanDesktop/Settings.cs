@@ -65,6 +65,19 @@ public class Settings
     /// <summary>Closing the window hides to the tray rather than quitting; shown once.</summary>
     public bool TrayNoticeSeen { get; set; }
 
+    /// <summary>A short "be ready" popup before each prayer.</summary>
+    public bool ReminderEnabled { get; set; }
+
+    /// <summary>How many minutes before the prayer the heads-up appears.</summary>
+    public int ReminderMinutes { get; set; } = 10;
+
+    /// <summary>
+    /// The du'aa said after the athan, played once the recording ends. On by
+    /// default because it is the natural companion to the call, and one toggle
+    /// away for anyone who would rather it did not.
+    /// </summary>
+    public bool AfterAthanDuaEnabled { get; set; } = true;
+
     /// <summary>Offer a month calendar as Ramadan comes round.</summary>
     public bool RamadanPromptEnabled { get; set; } = true;
 
