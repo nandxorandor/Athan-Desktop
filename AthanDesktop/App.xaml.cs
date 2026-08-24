@@ -68,11 +68,12 @@ public partial class App : Application
         _timer.Tick += OnTick;
         _timer.Start();
 
-        // Started by the Run key at login: come up in the tray, not in the
-        // user's face while they are trying to get to their desktop.
-        var silent = e.Args.Any(a => a.Equals("--tray", StringComparison.OrdinalIgnoreCase));
-        if (!silent) ShowMain();
-        else if (!Settings.HasLocation) ShowMain();
+        // --tray marks the launch as the one the Run key made at login. The
+        // window still opens unless the user has asked for a quiet start, and
+        // always when there is no location yet: an app with nothing to show
+        // needs to say why.
+        var atLogin = e.Args.Any(a => a.Equals("--tray", StringComparison.OrdinalIgnoreCase));
+        if (!atLogin || Settings.ShowWindowOnStartup || !Settings.HasLocation) ShowMain();
     }
 
     /// <summary>

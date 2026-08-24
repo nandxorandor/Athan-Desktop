@@ -56,6 +56,14 @@ public class Settings
     public bool StartWithWindows { get; set; } = true;
 
     /// <summary>
+    /// Whether the login launch also opens the main window. On by default: an
+    /// app that comes up in the notification area only reads as not having
+    /// started at all, and after a restart the day's times are the first thing
+    /// wanted. Unticking it keeps the quiet start.
+    /// </summary>
+    public bool ShowWindowOnStartup { get; set; } = true;
+
+    /// <summary>
     /// Whether the default above has been acted on. Without this the app would
     /// re-add the startup entry on every launch, silently overriding a user who
     /// deliberately turned it off.

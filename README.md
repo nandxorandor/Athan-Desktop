@@ -77,8 +77,9 @@ agree to the minute.
 - **Three modes per prayer**, clicked on the row itself:
   **Sound** (window and recording) · **Popup** (window only) · **Silent** (nothing).
 - **Runs in the notification area.** Closing the window does not quit it; it
-  keeps waiting for the next prayer. Starts with Windows by default, hidden in
-  the tray — untick that in Settings if you would rather it did not.
+  keeps waiting for the next prayer. Starts with Windows by default and opens
+  the window when it does — Settings has a checkbox for each, so it can start
+  quietly in the tray instead, or not start at all.
 - **Ramadan calendar** — the whole month as a table, saved as a **one-page**
   `.docx` to print, or a `.csv` for a spreadsheet. Offered automatically as
   Ramadan comes round.

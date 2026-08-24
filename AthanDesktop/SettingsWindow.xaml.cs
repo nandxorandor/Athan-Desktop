@@ -26,6 +26,7 @@ public partial class SettingsWindow : Window
         VolumeSlider.Value = App.Settings.Volume;
         AdjustSlider.Value = App.Settings.AdjustmentMinutes;
         StartupCheck.IsChecked = App.IsStartWithWindows();
+        ShowOnStartupCheck.IsChecked = App.Settings.ShowWindowOnStartup;
         RamadanPromptCheck.IsChecked = App.Settings.RamadanPromptEnabled;
         DuaCheck.IsChecked = App.Settings.AfterAthanDuaEnabled;
         ReminderCheck.IsChecked = App.Settings.ReminderEnabled;
@@ -46,6 +47,8 @@ public partial class SettingsWindow : Window
         RamadanWhen.Text = RamadanSummary();
         ReminderMinutesLabel.Text = "How early";
         ReminderMinutesBox.IsEnabled = App.Settings.ReminderEnabled;
+        // Nothing to decide about a window at login if there is no launch at login.
+        ShowOnStartupCheck.IsEnabled = StartupCheck.IsChecked == true;
         AdjustLabel.Text = App.Settings.AdjustmentMinutes switch
         {
             0 => "Time adjustment — none",
@@ -119,6 +122,14 @@ public partial class SettingsWindow : Window
         var on = StartupCheck.IsChecked == true;
         App.SetStartWithWindows(on);
         App.Settings.StartWithWindows = on;
+        App.Settings.Save();
+        Refresh();
+    }
+
+    private void ShowOnStartup_Changed(object sender, RoutedEventArgs e)
+    {
+        if (_loading) return;
+        App.Settings.ShowWindowOnStartup = ShowOnStartupCheck.IsChecked == true;
         App.Settings.Save();
     }
 

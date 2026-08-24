@@ -76,7 +76,13 @@
                                   Checked="Startup_Changed" Unchecked="Startup_Changed"/>
                         <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="30,6,0,0"
                                    Foreground="{StaticResource TextFaint}"
-                                   Text="Starts hidden in the notification area, so prayers are called without you opening it. Athan also keeps running there when you close the main window."/>
+                                   Text="Athan sits in the notification area, so prayers are called without you opening it. It keeps running there when you close the main window."/>
+                        <CheckBox x:Name="ShowOnStartupCheck" Margin="30,14,0,0"
+                                  Content="Show the Athan window when it starts"
+                                  Checked="ShowOnStartup_Changed" Unchecked="ShowOnStartup_Changed"/>
+                        <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="60,6,0,0"
+                                   Foreground="{StaticResource TextFaint}"
+                                   Text="Untick to have Athan start quietly in the notification area, with no window on your desktop."/>
                     </StackPanel>
                 </Border>
 

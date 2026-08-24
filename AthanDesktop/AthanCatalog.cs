@@ -87,9 +87,13 @@ public class AthanCatalog
     /// tag changed and silently hand a fresh install someone else's recording.
     /// These are the two the author chose.
     /// </summary>
+    /// <summary>Cairo, Mahmoud Khalil al-Husary.</summary>
     public string? DefaultGeneral =>
-        General.FirstOrDefault(s => s.Key == "kuwait/001.mp3")?.Key ?? General.FirstOrDefault()?.Key;
+        General.FirstOrDefault(s => s.Key == "egyptian/028.mp3")?.Key ?? General.FirstOrDefault()?.Key;
 
+    /// <summary>Fajr athan 1, Mishary bin Rashid Alafasy. The same recording is
+    /// also bundled as fajr/052-1.mp3; this is the copy that carries the source
+    /// tag, so it is the one credited.</summary>
     public string? DefaultFajr =>
         Fajr.FirstOrDefault(s => s.Key == "fajr/168410.mp3")?.Key ?? Fajr.FirstOrDefault()?.Key;
 
