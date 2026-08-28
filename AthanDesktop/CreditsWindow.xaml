@@ -29,7 +29,10 @@
         <StackPanel Grid.Row="2" Margin="0,12,0,0">
             <TextBlock Text="SOFTWARE" Style="{StaticResource SectionHeading}"/>
             <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" FontSize="13"
-                       Text="Prayer times are calculated with the open-source “adhan” library by Batoul Apps. Audio playback uses NAudio. The app makes no network requests and collects no data."/>
+                       Text="Prayer times are calculated with the open-source “adhan” library by Batoul Apps. Audio playback uses NAudio. Everything the app shows — prayer times, the qibla, the athkar and the Ramadan calendar — is computed on this PC and collects no data. The temperature is the only exception, and it can be switched off."/>
+            <TextBlock Text="WEATHER" Style="{StaticResource SectionHeading}" Margin="0,14,0,0"/>
+            <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" FontSize="13"
+                       Text="Temperature data by Open-Meteo.com, used under CC BY 4.0. Requested only while the temperature is switched on."/>
             <Button Content="Close" Click="Close_Click" Style="{StaticResource PrimaryButton}"
                     HorizontalAlignment="Right" MinWidth="100" Margin="0,14,0,0"/>
         </StackPanel>

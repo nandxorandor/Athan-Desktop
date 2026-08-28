@@ -278,9 +278,6 @@ public partial class MainWindow : Window
 
     private void Settings_Click(object sender, RoutedEventArgs e) => OpenSettings();
 
-    private void Credits_Click(object sender, RoutedEventArgs e) =>
-        new CreditsWindow { Owner = this }.ShowDialog();
-
     /// <summary>
     /// Hearing it now beats finding out at Fajr that the volume was wrong or no
     /// sound device was selected. Always plays, whatever Dhuhr's mode is set to.
@@ -324,7 +321,6 @@ public partial class MainWindow : Window
     {
         FlowDirection = Strings.Flow;
         SettingsButton.Content = Strings.Get("settings");
-        CreditsButton.Content = Strings.Get("credits_short");
         TestButton.Content = Strings.Get("test_athan");
         MorningButton.Content = Strings.Get("adhkar_morning");
         EveningButton.Content = Strings.Get("adhkar_evening");

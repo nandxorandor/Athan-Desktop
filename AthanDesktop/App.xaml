@@ -65,6 +65,58 @@
 
         <!-- ==================== cards ==================== -->
 
+        <!--
+          A folding settings section. The stock Expander brings a grey system
+          chevron that belongs to no theme at all; this is the app's own
+          heading with a rotating arrow, so seven sections can sit in one
+          window without a scroll that hides half of them.
+        -->
+        <Style x:Key="Section" TargetType="Expander">
+            <Setter Property="Margin" Value="0,0,0,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Expander">
+                        <StackPanel>
+                            <Border x:Name="head" Background="Transparent" Cursor="Hand"
+                                    Padding="2,10,2,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{TemplateBinding Header}"
+                                               FontSize="11" FontWeight="Bold"
+                                               Foreground="{StaticResource TextDim}"/>
+                                    <TextBlock x:Name="arrow" Grid.Column="1" Text="&#xE70D;"
+                                               FontFamily="Segoe MDL2 Assets" FontSize="10"
+                                               Foreground="{StaticResource TextDim}"
+                                               VerticalAlignment="Center"
+                                               RenderTransformOrigin="0.5,0.5"/>
+                                </Grid>
+                            </Border>
+                            <ContentPresenter x:Name="body" Visibility="Collapsed"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsExpanded" Value="True">
+                                <Setter TargetName="body" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="arrow" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="180"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="arrow" Property="Foreground"
+                                        Value="{StaticResource Accent}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="arrow" Property="Foreground"
+                                        Value="{StaticResource Accent}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="Card" TargetType="Border">
             <Setter Property="Background" Value="{StaticResource Surface}"/>
             <Setter Property="CornerRadius" Value="12"/>
