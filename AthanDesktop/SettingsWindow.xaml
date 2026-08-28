@@ -10,14 +10,14 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,64">
             <StackPanel Margin="22,18,22,10">
 
-                <Expander Header="ATHAN SOUND" Style="{StaticResource Section}">
+                <Expander x:Name="SecAthanSound" Header="ATHAN SOUND" Style="{StaticResource Section}">
                 <Border Style="{StaticResource Card}">
                     <StackPanel>
-                        <TextBlock Text="Fajr" Style="{StaticResource Dim}"/>
+                        <TextBlock x:Name="LblFajr" Style="{StaticResource Dim}"/>
                         <Button x:Name="FajrSoundButton" Style="{StaticResource RowButton}"
                                 Click="FajrSound_Click" Margin="0,6,0,0"/>
 
-                        <TextBlock Text="Other prayers" Style="{StaticResource Dim}" Margin="0,16,0,0"/>
+                        <TextBlock x:Name="LblOtherPrayers" Style="{StaticResource Dim}" Margin="0,16,0,0"/>
                         <Button x:Name="OtherSoundButton" Style="{StaticResource RowButton}"
                                 Click="OtherSound_Click" Margin="0,6,0,0"/>
 
@@ -26,7 +26,6 @@
                                 IsSnapToTickEnabled="True" ValueChanged="Volume_Changed" Margin="0,6,0,0"/>
 
                         <CheckBox x:Name="DuaCheck" Margin="0,20,0,0"
-                                  Content="Play the du'aa after the athan"
                                   Checked="Dua_Changed" Unchecked="Dua_Changed"/>
                         <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="30,6,0,0"
                                    Foreground="{StaticResource TextFaint}"
@@ -35,104 +34,95 @@
                 </Border>
                 </Expander>
 
-                <Expander Header="BEFORE THE PRAYER" Style="{StaticResource Section}">
+                <Expander x:Name="SecBeforePrayer" Header="BEFORE THE PRAYER" Style="{StaticResource Section}">
                 <Border Style="{StaticResource Card}">
                     <StackPanel>
-                        <CheckBox x:Name="ReminderCheck" Content="Show a heads-up before each prayer"
+                        <CheckBox x:Name="ReminderCheck"
                                   Checked="Reminder_Changed" Unchecked="Reminder_Changed"/>
-                        <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="30,6,0,0"
-                                   Foreground="{StaticResource TextFaint}"
-                                   Text="A silent popup so you can finish what you are doing. It closes itself after ten seconds."/>
+                        <TextBlock x:Name="ExpReminder" Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="30,6,0,0"
+                                   Foreground="{StaticResource TextFaint}"/>
 
                         <TextBlock x:Name="ReminderMinutesLabel" Style="{StaticResource Dim}" Margin="0,16,0,0"/>
                         <ComboBox x:Name="ReminderMinutesBox" SelectionChanged="ReminderMinutes_Changed"
                                   Margin="0,6,0,0"/>
-                        <Button Content="Show me what it looks like" Style="{StaticResource RowButton}"
+                        <Button x:Name="ReminderPreviewLbl" Style="{StaticResource RowButton}"
                                 Click="PreviewReminder_Click" Margin="0,10,0,0"/>
                     </StackPanel>
                 </Border>
                 </Expander>
 
-                <Expander Header="CALCULATION" Style="{StaticResource Section}">
+                <Expander x:Name="SecCalculation" Header="CALCULATION" Style="{StaticResource Section}">
                 <Border Style="{StaticResource Card}">
                     <StackPanel>
-                        <TextBlock Text="Method" Style="{StaticResource Dim}"/>
+                        <TextBlock x:Name="LblMethod" Style="{StaticResource Dim}"/>
                         <ComboBox x:Name="MethodBox" SelectionChanged="Method_Changed" Margin="0,6,0,0"/>
 
-                        <TextBlock Text="Asr method" Style="{StaticResource Dim}" Margin="0,16,0,0"/>
+                        <TextBlock x:Name="LblAsrMethod" Style="{StaticResource Dim}" Margin="0,16,0,0"/>
                         <ComboBox x:Name="MadhabBox" SelectionChanged="Madhab_Changed" Margin="0,6,0,0"/>
 
                         <TextBlock x:Name="AdjustLabel" Style="{StaticResource Dim}" Margin="0,18,0,0"/>
                         <Slider x:Name="AdjustSlider" Minimum="-120" Maximum="120" TickFrequency="1"
                                 IsSnapToTickEnabled="True" ValueChanged="Adjust_Changed" Margin="0,6,0,0"/>
-                        <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="0,4,0,0"
-                                   Foreground="{StaticResource TextFaint}"
-                                   Text="Shifts every prayer time. Use this when your local timetable differs from the calculation."/>
+                        <TextBlock x:Name="ExpAdjust" Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="0,4,0,0"
+                                   Foreground="{StaticResource TextFaint}"/>
                     </StackPanel>
                 </Border>
                 </Expander>
 
-                <Expander Header="WINDOWS" Style="{StaticResource Section}">
+                <Expander x:Name="SecWindows" Header="WINDOWS" Style="{StaticResource Section}">
                 <Border Style="{StaticResource Card}">
                     <StackPanel>
-                        <CheckBox x:Name="StartupCheck" Content="Start Athan when I sign in"
+                        <CheckBox x:Name="StartupCheck"
                                   Checked="Startup_Changed" Unchecked="Startup_Changed"/>
-                        <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="30,6,0,0"
-                                   Foreground="{StaticResource TextFaint}"
-                                   Text="Athan sits in the notification area, so prayers are called without you opening it. It keeps running there when you close the main window."/>
+                        <TextBlock x:Name="ExpStartup" Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="30,6,0,0"
+                                   Foreground="{StaticResource TextFaint}"/>
                         <CheckBox x:Name="ShowOnStartupCheck" Margin="30,14,0,0"
-                                  Content="Show the Athan window when it starts"
                                   Checked="ShowOnStartup_Changed" Unchecked="ShowOnStartup_Changed"/>
-                        <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="60,6,0,0"
-                                   Foreground="{StaticResource TextFaint}"
-                                   Text="Untick to have Athan start quietly in the notification area, with no window on your desktop."/>
+                        <TextBlock x:Name="ExpShowWindow" Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="60,6,0,0"
+                                   Foreground="{StaticResource TextFaint}"/>
                     </StackPanel>
                 </Border>
                 </Expander>
 
-                <Expander Header="TEMPERATURE" Style="{StaticResource Section}">
+                <Expander x:Name="SecTemperature" Header="TEMPERATURE" Style="{StaticResource Section}">
                 <Border Style="{StaticResource Card}">
                     <StackPanel>
                         <CheckBox x:Name="WeatherCheck"
-                                  Content="Show the temperature"
                                   Checked="Weather_Changed" Unchecked="Weather_Changed"/>
                         <!-- The whole privacy story next to the switch that
                              controls it, rather than buried in a policy. -->
-                        <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="0,6,0,0"
-                                   Text="The only part of Athan that uses the internet. Your coordinates are sent to Open-Meteo to look up the weather where you are - nothing else is sent, and nothing is stored. Turn this off and the app makes no network requests at all."/>
+                        <TextBlock x:Name="ExpTemperature" Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="0,6,0,0"/>
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <RadioButton x:Name="UnitCelsius" GroupName="Units" Content="Celsius"
+                            <RadioButton x:Name="UnitCelsius" GroupName="Units"
                                          Checked="Units_Changed" Margin="0,0,16,0"/>
-                            <RadioButton x:Name="UnitFahrenheit" GroupName="Units" Content="Fahrenheit"
+                            <RadioButton x:Name="UnitFahrenheit" GroupName="Units"
                                          Checked="Units_Changed"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
                 </Expander>
 
-                <Expander Header="RAMADAN" Style="{StaticResource Section}">
+                <Expander x:Name="SecRamadan" Header="RAMADAN" Style="{StaticResource Section}">
                 <Border Style="{StaticResource Card}">
                     <StackPanel>
-                        <Button Content="Ramadan calendar…" Style="{StaticResource RowButton}"
+                        <Button x:Name="RamadanOpenLbl" Style="{StaticResource RowButton}"
                                 Click="Ramadan_Click"/>
                         <TextBlock x:Name="RamadanWhen" Style="{StaticResource Dim}" Margin="2,8,0,0"
                                    Foreground="{StaticResource TextFaint}" TextWrapping="Wrap"/>
                         <CheckBox x:Name="RamadanPromptCheck" Margin="0,14,0,0"
-                                  Content="Offer this automatically each Ramadan"
                                   Checked="RamadanPrompt_Changed" Unchecked="RamadanPrompt_Changed"/>
-                        <TextBlock Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="30,6,0,0"
-                                   Foreground="{StaticResource TextFaint}"
-                                   Text="Asks once, in the fortnight before the first fast, whether you want the month's timetable. Dismissing it only silences that year."/>
+                        <TextBlock x:Name="ExpRamadan" Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="30,6,0,0"
+                                   Foreground="{StaticResource TextFaint}"/>
                     </StackPanel>
                 </Border>
                 </Expander>
 
-                <Expander Header="ABOUT" Style="{StaticResource Section}">
+                <Expander x:Name="SecAbout" Header="ABOUT" Style="{StaticResource Section}">
                 <Border Style="{StaticResource Card}" Padding="18,10">
                     <StackPanel>
-                        <Button Content="Resources &amp; credits" Style="{StaticResource RowButton}"
+                        <Button x:Name="CreditsRowLbl" Style="{StaticResource RowButton}"
                                 Click="Credits_Click"/>
-                        <Button Content="About Athan" Style="{StaticResource RowButton}"
+                        <Button x:Name="AboutRowLbl" Style="{StaticResource RowButton}"
                                 Click="About_Click" Margin="0,8,0,0"/>
                     </StackPanel>
                 </Border>
@@ -143,7 +133,7 @@
 
         <!-- Pinned, so Close never scrolls out of reach on a short window. -->
         <Border VerticalAlignment="Bottom" Background="{StaticResource Bg}" Padding="22,12">
-            <Button Content="Close" Click="Close_Click" Style="{StaticResource PrimaryButton}"
+            <Button x:Name="CloseBtn" Click="Close_Click" Style="{StaticResource PrimaryButton}"
                     HorizontalAlignment="Right" MinWidth="100"/>
         </Border>
     </Grid>

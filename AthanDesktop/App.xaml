@@ -119,6 +119,7 @@
                               reader and the mouse all drive the same state.
                             -->
                             <ToggleButton x:Name="head" Cursor="Hand" Focusable="True"
+                                          Content="{TemplateBinding Header}"
                                           IsChecked="{Binding IsExpanded, Mode=TwoWay,
                                                       RelativeSource={RelativeSource TemplatedParent}}">
                                 <ToggleButton.Template>
@@ -130,8 +131,7 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Column="0"
-                                                           Text="{Binding Header,
-                                                                  RelativeSource={RelativeSource AncestorType=Expander}}"
+                                                           Text="{TemplateBinding Content}"
                                                            FontSize="11" FontWeight="Bold"
                                                            Foreground="{StaticResource TextDim}"/>
                                                 <TextBlock x:Name="arrow" Grid.Column="1" Text="&#xE70D;"

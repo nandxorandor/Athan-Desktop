@@ -28,6 +28,7 @@ public partial class SettingsWindow : Window
         StartupCheck.IsChecked = App.IsStartWithWindows();
         ShowOnStartupCheck.IsChecked = App.Settings.ShowWindowOnStartup;
         RamadanPromptCheck.IsChecked = App.Settings.RamadanPromptEnabled;
+        ApplyLanguage();
         DuaCheck.IsChecked = App.Settings.AfterAthanDuaEnabled;
         WeatherCheck.IsChecked = App.Settings.WeatherEnabled;
         UnitCelsius.IsChecked = !App.Settings.Fahrenheit;
@@ -144,6 +145,56 @@ public partial class SettingsWindow : Window
             if ((int)item.Tag! == minutes) { ReminderMinutesBox.SelectedItem = item; return; }
         }
         if (ReminderMinutesBox.Items.Count > 0) ReminderMinutesBox.SelectedIndex = 1;
+    }
+
+    /// <summary>
+    /// Every label on this window, set from the string table rather than left
+    /// in the XAML. The window is built once per opening, so this runs at
+    /// construction and there is no need to react to a language change while
+    /// it is on screen.
+    /// </summary>
+    private void ApplyLanguage()
+    {
+        FlowDirection = Strings.Flow;
+        Title = Strings.Get("settings");
+
+        SecAthanSound.Header = Strings.Get("sec_athan_sound");
+        SecBeforePrayer.Header = Strings.Get("sec_before_prayer");
+        SecCalculation.Header = Strings.Get("sec_calculation");
+        SecWindows.Header = Strings.Get("sec_windows");
+        SecTemperature.Header = Strings.Get("sec_temperature");
+        SecRamadan.Header = Strings.Get("sec_ramadan");
+        SecAbout.Header = Strings.Get("sec_about");
+
+        LblFajr.Text = Strings.Get("for_fajr");
+        LblOtherPrayers.Text = Strings.Get("other_prayers");
+        DuaCheck.Content = Strings.Get("after_athan_dua");
+
+        ReminderCheck.Content = Strings.Get("reminder_enable_win");
+        ExpReminder.Text = Strings.Get("reminder_explainer_win");
+        ReminderPreviewLbl.Content = Strings.Get("reminder_preview");
+
+        LblMethod.Text = Strings.Get("method_label");
+        LblAsrMethod.Text = Strings.Get("juristic_method");
+        ExpAdjust.Text = Strings.Get("time_adjustment_hint");
+
+        StartupCheck.Content = Strings.Get("start_with_windows");
+        ExpStartup.Text = Strings.Get("startup_explainer");
+        ShowOnStartupCheck.Content = Strings.Get("show_window_on_startup");
+        ExpShowWindow.Text = Strings.Get("show_window_explainer");
+
+        WeatherCheck.Content = Strings.Get("temperature_enable");
+        ExpTemperature.Text = Strings.Get("temperature_explainer");
+        UnitCelsius.Content = Strings.Get("unit_celsius");
+        UnitFahrenheit.Content = Strings.Get("unit_fahrenheit");
+
+        RamadanOpenLbl.Content = Strings.Get("ramadan_open");
+        RamadanPromptCheck.Content = Strings.Get("ramadan_auto_offer");
+        ExpRamadan.Text = Strings.Get("ramadan_auto_explainer");
+
+        CreditsRowLbl.Content = Strings.Get("credits_row");
+        AboutRowLbl.Content = Strings.Get("about_athan");
+        CloseBtn.Content = Strings.Get("close");
     }
 
     /// <summary>

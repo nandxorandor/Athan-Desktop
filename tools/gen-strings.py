@@ -35,7 +35,13 @@ SHARED = [
     "ramadan_col_suhoor", "ramadan_col_iftar", "ramadan_footnote", "ramadan_no_location",
     "ramadan_prompt_title", "ramadan_prompt_body", "ramadan_prompt_yes", "ramadan_prompt_no",
     "ramadan_auto_offer",
-    "after_athan_dua", "reminder_title_short", "reminder_summary_off",
+    "after_athan_dua", "after_athan_dua_explainer",
+    "reminder_title_short", "reminder_summary_off", "reminder_explainer",
+    "time_adjustment_hint", "madhab_shafi_long", "for_fajr", "for_other_prayers",
+    "about_version", "about_developed_by", "about_github", "about_privacy",
+    "about_audio_credit", "about_audio_credit_detail", "credits_software_detail",
+    "athan_audio_options", "dont_show_again", "open_settings", "search", "use_gps",
+    "city_hint", "city_not_found", "delete", "not_now", "view_downloaded_short",
     "lang_english", "lang_arabic", "language",
     "method_north_america", "method_mwl", "method_egyptian", "method_karachi",
     "method_umm_al_qura", "method_dubai", "method_moonsighting", "method_kuwait",
@@ -63,6 +69,35 @@ DESKTOP_ONLY = {
     "qibla_line": (u"Qibla {0}° from true north  ·  {1} km to Mecca",
                    u"القبلة {0}° من الشمال الجغرافي  ·  {1} كم إلى مكة"),
     "no_location_yet": (u"No location yet", u"\u0644\u0645 \u064a\u064f\u062d\u062f\u0651\u062f \u0627\u0644\u0645\u0648\u0642\u0639 \u0628\u0639\u062f"),
+
+    # Settings section headings.
+    "sec_athan_sound": (u"ATHAN SOUND", u"\u0635\u0648\u062a \u0627\u0644\u0623\u0630\u0627\u0646"),
+    "sec_before_prayer": (u"BEFORE THE PRAYER", u"\u0642\u0628\u0644 \u0627\u0644\u0635\u0644\u0627\u0629"),
+    "sec_calculation": (u"CALCULATION", u"\u0627\u0644\u062d\u0633\u0627\u0628"),
+    "sec_windows": (u"WINDOWS", u"\u0648\u064a\u0646\u062f\u0648\u0632"),
+    "sec_temperature": (u"TEMPERATURE", u"\u062f\u0631\u062c\u0629 \u0627\u0644\u062d\u0631\u0627\u0631\u0629"),
+    "sec_ramadan": (u"RAMADAN", u"\u0631\u0645\u0636\u0627\u0646"),
+    "sec_about": (u"ABOUT", u"\u0639\u0646 \u0627\u0644\u062a\u0637\u0628\u064a\u0642"),
+    "sec_software": (u"SOFTWARE", u"\u0627\u0644\u0628\u0631\u0645\u062c\u064a\u0627\u062a"),
+    "sec_weather": (u"WEATHER", u"\u0627\u0644\u0637\u0642\u0633"),
+
+    # Settings rows that have no Android counterpart, because they describe
+    # behaviour only Windows has.
+    "other_prayers": (u"Other prayers", u"\u0628\u0627\u0642\u064a \u0627\u0644\u0635\u0644\u0648\u0627\u062a"),
+    "reminder_enable_win": (u"Show a heads-up before each prayer",
+                            u"\u0625\u0638\u0647\u0627\u0631 \u062a\u0646\u0628\u064a\u0647 \u0642\u0628\u0644 \u0643\u0644 \u0635\u0644\u0627\u0629"),
+    "reminder_preview": (u"Show me what it looks like", u"\u0623\u0631\u0650\u0646\u064a \u0643\u064a\u0641 \u064a\u0628\u062f\u0648"),
+    "reminder_explainer_win": (u"A silent popup so you can finish what you are doing. It closes itself after ten seconds.",
+                               u"\u0646\u0627\u0641\u0630\u0629 \u0635\u0627\u0645\u062a\u0629 \u062a\u062a\u064a\u062d \u0644\u0643 \u0625\u0646\u0647\u0627\u0621 \u0645\u0627 \u0628\u064a\u062f\u0643\u060c \u0648\u062a\u063a\u0644\u0642 \u0646\u0641\u0633\u0647\u0627 \u0628\u0639\u062f \u0639\u0634\u0631 \u062b\u0648\u0627\u0646\u064d."),
+    "startup_explainer": (u"Athan sits in the notification area, so prayers are called without you opening it. It keeps running there when you close the main window.",
+                          u"\u064a\u0628\u0642\u0649 \u0627\u0644\u062a\u0637\u0628\u064a\u0642 \u0641\u064a \u0634\u0631\u064a\u0637 \u0627\u0644\u0625\u0634\u0639\u0627\u0631\u0627\u062a\u060c \u0641\u062a\u064f\u0631\u0641\u0639 \u0627\u0644\u0635\u0644\u0648\u0627\u062a \u062f\u0648\u0646 \u0623\u0646 \u062a\u0641\u062a\u062d\u0647. \u0648\u064a\u0638\u0644 \u064a\u0639\u0645\u0644 \u0647\u0646\u0627\u0643 \u0628\u0639\u062f \u0625\u063a\u0644\u0627\u0642 \u0627\u0644\u0646\u0627\u0641\u0630\u0629 \u0627\u0644\u0631\u0626\u064a\u0633\u064a\u0629."),
+    "show_window_explainer": (u"Untick to have Athan start quietly in the notification area, with no window on your desktop.",
+                              u"\u0623\u0632\u0644 \u0627\u0644\u062a\u062d\u062f\u064a\u062f \u0644\u064a\u0628\u062f\u0623 \u0627\u0644\u062a\u0637\u0628\u064a\u0642 \u0628\u0647\u062f\u0648\u0621 \u0641\u064a \u0634\u0631\u064a\u0637 \u0627\u0644\u0625\u0634\u0639\u0627\u0631\u0627\u062a \u062f\u0648\u0646 \u0646\u0627\u0641\u0630\u0629 \u0639\u0644\u0649 \u0633\u0637\u062d \u0627\u0644\u0645\u0643\u062a\u0628."),
+    "ramadan_open": (u"Ramadan calendar\u2026", u"\u062a\u0642\u0648\u064a\u0645 \u0631\u0645\u0636\u0627\u0646\u2026"),
+    "ramadan_auto_explainer": (u"Asks once, in the fortnight before the first fast, whether you want the month's timetable. Dismissing it only silences that year.",
+                               u"\u064a\u0633\u0623\u0644 \u0645\u0631\u0629 \u0648\u0627\u062d\u062f\u0629 \u0641\u064a \u0627\u0644\u0623\u0633\u0628\u0648\u0639\u064a\u0646 \u0627\u0644\u0633\u0627\u0628\u0642\u064a\u0646 \u0644\u0623\u0648\u0644 \u0635\u0648\u0645 \u0625\u0646 \u0643\u0646\u062a \u062a\u0631\u064a\u062f \u062c\u062f\u0648\u0644 \u0627\u0644\u0634\u0647\u0631. \u0648\u062a\u062c\u0627\u0647\u0644\u0647 \u064a\u064f\u0633\u0643\u062a\u0647 \u0644\u0630\u0644\u0643 \u0627\u0644\u0639\u0627\u0645 \u0641\u0642\u0637."),
+    "about_athan": (u"About Athan", u"\u0639\u0646 \u0627\u0644\u062a\u0637\u0628\u064a\u0642"),
+    "method_label": (u"Method", u"\u0627\u0644\u0637\u0631\u064a\u0642\u0629"),
 }
 
 
