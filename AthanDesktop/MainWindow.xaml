@@ -1,7 +1,7 @@
 <Window x:Class="AthanDesktop.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Athan" Height="680" Width="440"
+        Title="Athan" Height="680" Width="520"
         Background="{StaticResource Bg}"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize" FontFamily="Segoe UI">

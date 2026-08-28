@@ -123,8 +123,6 @@ public static class Strings
         ["start_with_windows"] = ("Start Athan when I sign in", "تشغيل التطبيق عند بدء الويندوز"),
         ["show_window_on_startup"] = ("Show the Athan window when it starts", "إظهار النافذة عند البدء"),
         ["athkar_button"] = ("Athkar", "الأذكار"),
-        ["adhkar_morning_short"] = ("Morning", "أذكار الصباح"),
-        ["adhkar_evening_short"] = ("Evening", "أذكار المساء"),
         ["credits_short"] = ("Credits", "المصادر"),
         ["at_time"] = ("at {0}", "الساعة {0}"),
         ["qibla_line"] = ("Qibla {0}° from true north  ·  {1} km to Mecca", "القبلة {0}° من الشمال الجغرافي  ·  {1} كم إلى مكة"),

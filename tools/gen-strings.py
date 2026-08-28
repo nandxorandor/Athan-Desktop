@@ -55,10 +55,9 @@ DESKTOP_ONLY = {
     "show_window_on_startup": (u"Show the Athan window when it starts",
                                u"\u0625\u0638\u0647\u0627\u0631 \u0627\u0644\u0646\u0627\u0641\u0630\u0629 \u0639\u0646\u062f \u0627\u0644\u0628\u062f\u0621"),
     "athkar_button": (u"Athkar", u"\u0627\u0644\u0623\u0630\u0643\u0627\u0631"),
-    # Short forms for the main window's quarter-width buttons. The full
-    # headings are on the windows themselves, where there is room for them.
-    "adhkar_morning_short": (u"Morning", u"\u0623\u0630\u0643\u0627\u0631 \u0627\u0644\u0635\u0628\u0627\u062d"),
-    "adhkar_evening_short": (u"Evening", u"\u0623\u0630\u0643\u0627\u0631 \u0627\u0644\u0645\u0633\u0627\u0621"),
+    # "Resources & credits" does not fit a third of the row; the window it
+    # opens carries the full title. The athkar keep their full names \u2014 the
+    # window was widened to fit them rather than the words cut.
     "credits_short": (u"Credits", u"\u0627\u0644\u0645\u0635\u0627\u062f\u0631"),
     "at_time": (u"at {0}", u"الساعة {0}"),
     "qibla_line": (u"Qibla {0}° from true north  ·  {1} km to Mecca",

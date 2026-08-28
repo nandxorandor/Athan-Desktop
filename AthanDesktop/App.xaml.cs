@@ -52,6 +52,19 @@ public partial class App : Application
         base.OnStartup(e);
         ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
+        // An unhandled exception on the UI thread otherwise takes a window down
+        // silently - a button that does nothing when clicked, with no way for
+        // anyone to say what went wrong. The app must survive it (it exists to
+        // call the prayers) but it must not do so quietly.
+        DispatcherUnhandledException += (_, args) =>
+        {
+            args.Handled = true;
+            MessageBox.Show(
+                args.Exception.ToString(),
+                "Athan hit a problem",
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+        };
+
         Settings = Settings.Load();
         Catalog = new AthanCatalog();
         Engine = new PrayerEngine(Settings);

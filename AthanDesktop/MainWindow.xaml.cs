@@ -288,11 +288,17 @@ public partial class MainWindow : Window
     private void Test_Click(object sender, RoutedEventArgs e) =>
         ((App)Application.Current).FireAthan(Slot.Dhuhr, force: true);
 
+    // Owned only when this window is actually on screen. The app lives in the
+    // tray, so "this" can be hidden or parked off-screen - and an owned window
+    // centred on it opens where nobody can see it.
+    private void ShowAdhkar(AdhkarSitting sitting) =>
+        new AdhkarWindow(sitting) { Owner = IsVisible ? this : null }.ShowDialog();
+
     private void Morning_Click(object sender, RoutedEventArgs e) =>
-        new AdhkarWindow(AdhkarSitting.Morning) { Owner = this }.ShowDialog();
+        ShowAdhkar(AdhkarSitting.Morning);
 
     private void Evening_Click(object sender, RoutedEventArgs e) =>
-        new AdhkarWindow(AdhkarSitting.Evening) { Owner = this }.ShowDialog();
+        ShowAdhkar(AdhkarSitting.Evening);
 
     private void Ramadan_Click(object sender, RoutedEventArgs e) =>
         ((App)Application.Current).ShowRamadan(RamadanCalendar.UpcomingHijriYear());
@@ -320,8 +326,8 @@ public partial class MainWindow : Window
         SettingsButton.Content = Strings.Get("settings");
         CreditsButton.Content = Strings.Get("credits_short");
         TestButton.Content = Strings.Get("test_athan");
-        MorningButton.Content = Strings.Get("adhkar_morning_short");
-        EveningButton.Content = Strings.Get("adhkar_evening_short");
+        MorningButton.Content = Strings.Get("adhkar_morning");
+        EveningButton.Content = Strings.Get("adhkar_evening");
         RamadanButton.Content = Strings.Get("ramadan_short");
         NextLabel.Text = Strings.Get("next_prayer");
         // The button offers the other language, so it is always readable by
