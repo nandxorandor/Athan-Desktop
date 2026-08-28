@@ -35,14 +35,12 @@
 
                     <!-- The one live value on the window, so it is lit rather
                          than merely written. Click it to swap C and F. -->
-                    <Border x:Name="TemperatureBox" Margin="12,0,0,0" Padding="12,5"
-                            CornerRadius="14" Cursor="Hand" Visibility="Collapsed"
-                            VerticalAlignment="Center"
-                            Background="{StaticResource TemperatureGlow}"
-                            MouseLeftButtonUp="Temperature_Click">
-                        <TextBlock x:Name="Temperature" FontSize="17" FontWeight="SemiBold"
-                                   Foreground="{StaticResource TemperatureText}"/>
-                    </Border>
+                    <Button x:Name="TemperatureBox" Style="{StaticResource GlowButton}"
+                            Margin="12,0,0,0" Visibility="Collapsed"
+                            VerticalAlignment="Center" Click="Temperature_Click"
+                            ToolTip="Click to switch between Celsius and Fahrenheit">
+                        <TextBlock x:Name="Temperature"/>
+                    </Button>
                 </StackPanel>
             </Border>
 

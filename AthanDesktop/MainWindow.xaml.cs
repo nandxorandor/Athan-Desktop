@@ -370,8 +370,12 @@ public partial class MainWindow : Window
         TemperatureBox.Visibility = Visibility.Visible;
     }
 
-    private void Temperature_Click(object sender, MouseButtonEventArgs e)
+    private void Temperature_Click(object sender, RoutedEventArgs e)
     {
+        // The reading sits inside the location row, whose own click opens the
+        // location dialog. A Button's Click does not bubble as a mouse event,
+        // so the dialog no longer lands on top of the unit you just switched.
+        e.Handled = true;
         App.Settings.Fahrenheit = !App.Settings.Fahrenheit;
         App.Settings.Save();
         ShowTemperature();

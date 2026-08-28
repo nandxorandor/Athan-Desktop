@@ -71,6 +71,41 @@
           heading with a rotating arrow, so seven sections can sit in one
           window without a scroll that hides half of them.
         -->
+        <!--
+          The temperature reading. A Button rather than a Border with a mouse
+          handler: a bare Border is invisible to the keyboard and to a screen
+          reader, and its click bubbles up to whatever sits behind it - here
+          the location row, which opened its dialog on top of the unit you had
+          just switched.
+        -->
+        <Style x:Key="GlowButton" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="11,5"/>
+            <Setter Property="Foreground" Value="{StaticResource TemperatureText}"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="glow" CornerRadius="14"
+                                Background="{StaticResource TemperatureGlow}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="glow" Property="Opacity" Value="0.82"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="glow" Property="Opacity" Value="0.65"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="Section" TargetType="Expander">
             <Setter Property="Margin" Value="0,0,0,6"/>
             <Setter Property="Template">
