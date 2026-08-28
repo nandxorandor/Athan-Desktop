@@ -112,39 +112,58 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Expander">
                         <StackPanel>
-                            <Border x:Name="head" Background="Transparent" Cursor="Hand"
-                                    Padding="2,10,2,10">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="{TemplateBinding Header}"
-                                               FontSize="11" FontWeight="Bold"
-                                               Foreground="{StaticResource TextDim}"/>
-                                    <TextBlock x:Name="arrow" Grid.Column="1" Text="&#xE70D;"
-                                               FontFamily="Segoe MDL2 Assets" FontSize="10"
-                                               Foreground="{StaticResource TextDim}"
-                                               VerticalAlignment="Center"
-                                               RenderTransformOrigin="0.5,0.5"/>
-                                </Grid>
-                            </Border>
+                            <!--
+                              A ToggleButton, not a Border: the header has to
+                              actually change IsExpanded. Bound two-way to the
+                              Expander's own property so the keyboard, a screen
+                              reader and the mouse all drive the same state.
+                            -->
+                            <ToggleButton x:Name="head" Cursor="Hand" Focusable="True"
+                                          IsChecked="{Binding IsExpanded, Mode=TwoWay,
+                                                      RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="Transparent" Padding="2,10,2,10">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{Binding Header,
+                                                                  RelativeSource={RelativeSource AncestorType=Expander}}"
+                                                           FontSize="11" FontWeight="Bold"
+                                                           Foreground="{StaticResource TextDim}"/>
+                                                <TextBlock x:Name="arrow" Grid.Column="1" Text="&#xE70D;"
+                                                           FontFamily="Segoe MDL2 Assets" FontSize="10"
+                                                           Foreground="{StaticResource TextDim}"
+                                                           VerticalAlignment="Center"
+                                                           RenderTransformOrigin="0.5,0.5"/>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="arrow" Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <RotateTransform Angle="180"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter TargetName="arrow" Property="Foreground"
+                                                        Value="{StaticResource Accent}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="arrow" Property="Foreground"
+                                                        Value="{StaticResource Accent}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
                             <ContentPresenter x:Name="body" Visibility="Collapsed"/>
                         </StackPanel>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsExpanded" Value="True">
                                 <Setter TargetName="body" Property="Visibility" Value="Visible"/>
-                                <Setter TargetName="arrow" Property="RenderTransform">
-                                    <Setter.Value>
-                                        <RotateTransform Angle="180"/>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter TargetName="arrow" Property="Foreground"
-                                        Value="{StaticResource Accent}"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="arrow" Property="Foreground"
-                                        Value="{StaticResource Accent}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
