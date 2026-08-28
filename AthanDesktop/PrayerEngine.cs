@@ -8,14 +8,17 @@ namespace AthanDesktop;
 /// marks the end of Fajr's window, but it is not a prayer and must never raise
 /// an athan - hence <see cref="Notifies"/>.
 /// </summary>
-public record Slot(string Name, Prayer Prayer, string Label, bool Notifies = true)
+public record Slot(string Name, Prayer Prayer, string LabelKey, bool Notifies = true)
 {
-    public static readonly Slot Fajr = new("FAJR", Prayer.FAJR, "Fajr");
-    public static readonly Slot Sunrise = new("SUNRISE", Prayer.SUNRISE, "Sunrise", Notifies: false);
-    public static readonly Slot Dhuhr = new("DHUHR", Prayer.DHUHR, "Dhuhr");
-    public static readonly Slot Asr = new("ASR", Prayer.ASR, "Asr");
-    public static readonly Slot Maghrib = new("MAGHRIB", Prayer.MAGHRIB, "Maghrib");
-    public static readonly Slot Isha = new("ISHA", Prayer.ISHA, "Isha");
+    /// <summary>The prayer's name in the chosen language, looked up on demand.</summary>
+    public string Label => Strings.Get(LabelKey);
+
+    public static readonly Slot Fajr = new("FAJR", Prayer.FAJR, "fajr");
+    public static readonly Slot Sunrise = new("SUNRISE", Prayer.SUNRISE, "sunrise", Notifies: false);
+    public static readonly Slot Dhuhr = new("DHUHR", Prayer.DHUHR, "dhuhr");
+    public static readonly Slot Asr = new("ASR", Prayer.ASR, "asr");
+    public static readonly Slot Maghrib = new("MAGHRIB", Prayer.MAGHRIB, "maghrib");
+    public static readonly Slot Isha = new("ISHA", Prayer.ISHA, "isha");
 
     public static readonly Slot[] All = { Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha };
 

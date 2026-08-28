@@ -23,6 +23,17 @@
         <SolidColorBrush x:Key="Sunrise" Color="#F5B942"/>
         <SolidColorBrush x:Key="Line" Color="#22302A"/>
         <SolidColorBrush x:Key="IconIdle" Color="#41504A"/>
+        <SolidColorBrush x:Key="TemperatureText" Color="#8FE8C4"/>
+        <SolidColorBrush x:Key="TodayRow" Color="#2E6B4F"/>
+        <SolidColorBrush x:Key="TodayText" Color="#EAFBF3"/>
+        <SolidColorBrush x:Key="FridayRow" Color="#1B3B2E"/>
+
+        <!-- The glow behind the temperature: lit from within rather than boxed. -->
+        <RadialGradientBrush x:Key="TemperatureGlow">
+            <GradientStop Color="#553FE08A" Offset="0"/>
+            <GradientStop Color="#333FE08A" Offset="0.6"/>
+            <GradientStop Color="#003FE08A" Offset="1"/>
+        </RadialGradientBrush>
 
         <LinearGradientBrush x:Key="HeaderGlow" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#17281F" Offset="0"/>

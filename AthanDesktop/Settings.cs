@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -95,6 +96,28 @@ public class Settings
     /// silently switching the feature off for good.
     /// </summary>
     public int RamadanPromptDismissedYear { get; set; }
+
+    /// <summary>
+    /// "en" or "ar"; empty until the user picks one, which lets a fresh install
+    /// follow Windows' own language instead of guessing English.
+    /// </summary>
+    public string Language { get; set; } = "";
+
+    /// <summary>
+    /// The temperature in the header. On by default, and the one switch that
+    /// takes the app back to making no network requests at all.
+    /// </summary>
+    public bool WeatherEnabled { get; set; } = true;
+
+    /// <summary>
+    /// Whether the first-run notice about the temperature has been shown. It is
+    /// asked once, before any coordinates leave this PC.
+    /// </summary>
+    public bool WeatherNoticeSeen { get; set; }
+
+    /// <summary>Fahrenheit rather than Celsius.</summary>
+    public bool Fahrenheit { get; set; } = RegionInfo.CurrentRegion.Name is
+        "US" or "LR" or "MM" or "BS" or "BZ" or "KY" or "PW";
 
     [JsonIgnore]
     public bool HasLocation => !double.IsNaN(Latitude) && !double.IsNaN(Longitude);

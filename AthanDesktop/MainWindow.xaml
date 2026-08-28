@@ -32,6 +32,17 @@
                         <TextBlock x:Name="HijriDate" FontSize="12.5"
                                    Foreground="{StaticResource Sunrise}" Margin="0,2,0,0"/>
                     </StackPanel>
+
+                    <!-- The one live value on the window, so it is lit rather
+                         than merely written. Click it to swap C and F. -->
+                    <Border x:Name="TemperatureBox" Margin="12,0,0,0" Padding="12,5"
+                            CornerRadius="14" Cursor="Hand" Visibility="Collapsed"
+                            VerticalAlignment="Center"
+                            Background="{StaticResource TemperatureGlow}"
+                            MouseLeftButtonUp="Temperature_Click">
+                        <TextBlock x:Name="Temperature" FontSize="17" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TemperatureText}"/>
+                    </Border>
                 </StackPanel>
             </Border>
 
@@ -59,9 +70,30 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="Settings" Click="Settings_Click" Margin="0,0,5,0"/>
-                    <Button Grid.Column="1" Content="Credits" Click="Credits_Click" Margin="5,0,5,0"/>
-                    <Button Grid.Column="2" Content="Test athan" Click="Test_Click" Margin="5,0,0,0"/>
+                    <Button x:Name="SettingsButton" Grid.Column="0" Click="Settings_Click" Margin="0,0,5,0"/>
+                    <Button x:Name="CreditsButton" Grid.Column="1" Click="Credits_Click"
+                            Margin="5,0,5,0" Padding="8,9"/>
+                    <Button x:Name="TestButton" Grid.Column="2" Click="Test_Click" Margin="5,0,0,0"/>
+                </Grid>
+
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="MorningButton" Grid.Column="0" Click="Morning_Click"
+                            Margin="0,0,5,0" Padding="6,9" FontSize="12.5"/>
+                    <Button x:Name="EveningButton" Grid.Column="1" Click="Evening_Click"
+                            Margin="5,0,5,0" Padding="6,9" FontSize="12.5"/>
+                    <Button x:Name="RamadanButton" Grid.Column="2" Click="Ramadan_Click"
+                            Margin="5,0,5,0" Padding="6,9" FontSize="12.5"/>
+                    <!-- The language switch shows the language you would move
+                         to, not the one you are in: a button labelled with the
+                         current state reads as a statement, not a control. -->
+                    <Button x:Name="LanguageButton" Grid.Column="3" Click="Language_Click"
+                            Margin="5,0,0,0" MinWidth="58" Padding="8,9" FontSize="12.5"/>
                 </Grid>
             </StackPanel>
         </Grid>

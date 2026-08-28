@@ -1,0 +1,26 @@
+<Window x:Class="AthanDesktop.AdhkarWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Athkar" Height="700" Width="560"
+        Background="{StaticResource Bg}"
+        WindowStartupLocation="CenterOwner" FontFamily="Segoe UI">
+
+    <!-- Always right-to-left, whatever the interface language: the content is
+         Arabic, and an English UI must not push it to the wrong edge. -->
+    <Grid Margin="20" FlowDirection="RightToLeft">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="TitleText" Grid.Row="0" FontSize="24"
+                   Foreground="{StaticResource Accent}"/>
+        <TextBlock x:Name="WhenText" Grid.Row="1" FontSize="13" Margin="0,4,0,0"
+                   Foreground="{StaticResource TextDim}"/>
+
+        <ScrollViewer Grid.Row="2" Margin="0,14,0,0" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="List"/>
+        </ScrollViewer>
+    </Grid>
+</Window>

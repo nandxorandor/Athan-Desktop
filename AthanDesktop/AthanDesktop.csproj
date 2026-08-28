@@ -36,6 +36,7 @@
   <ItemGroup>
     <PackageReference Include="Adhan" Version="0.9.0" />
     <PackageReference Include="NAudio" Version="2.2.1" />
+    <EmbeddedResource Include="Assets\adhkar\*.tsv" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +47,10 @@
     <EmbeddedResource Include="Assets\cities.tsv" />
     <!-- The du'aa said after the athan, played as part of the same session. -->
     <EmbeddedResource Include="Assets\dua\*.mp3" />
+    <!-- The morning and evening athkar (Assets\adhkar\*.tsv), copied from the
+         Android app so both platforms show the same text from the same file,
+         are picked up by the SDK's default EmbeddedResource glob and must not
+         be listed again here. -->
   </ItemGroup>
 
 </Project>

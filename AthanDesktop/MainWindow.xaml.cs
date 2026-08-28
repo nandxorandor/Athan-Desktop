@@ -13,8 +13,13 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        ApplyLanguage();
         Refresh();
         if (!App.Settings.HasLocation) Dispatcher.BeginInvoke(ChooseLocation);
+        // The temperature notice is answered before anything is fetched. The
+        // Ramadan offer is the App's, not this window's - it has the guards
+        // that keep it from interrupting an athan.
+        Dispatcher.BeginInvoke(() => AskAboutTemperature());
     }
 
     /// <summary>
@@ -47,19 +52,23 @@ public partial class MainWindow : Window
     public void Refresh()
     {
         CityName.Text = App.Settings.HasLocation
-            ? (string.IsNullOrWhiteSpace(App.Settings.CityName) ? "Location set" : App.Settings.CityName)
-            : "Set your location";
+            ? (string.IsNullOrWhiteSpace(App.Settings.CityName)
+                ? Strings.Get("location_set")
+                : Ltr(App.Settings.CityName))
+            : Strings.Get("set_location");
 
         HijriDate.Text = HijriToday();
+        ShowTemperature();
+        Weather.Refresh(App.Settings, _ => Dispatcher.Invoke(ShowTemperature));
 
         TimesList.Items.Clear();
         var times = App.Engine.Today();
         if (times.Count == 0)
         {
             NextLabel.Visibility = Visibility.Collapsed;
-            NextPrayer.Text = "No location yet";
+            NextPrayer.Text = Strings.Get("no_location_yet");
             NextPrayer.FontSize = 22;
-            NextAt.Text = "Click the name above to set one";
+            NextAt.Text = Strings.Get("set_location");
             QiblaLine.Text = "";
             return;
         }
@@ -75,7 +84,9 @@ public partial class MainWindow : Window
         var distance = App.Engine.MeccaDistanceKm();
         QiblaLine.Text = bearing is null
             ? ""
-            : $"Qibla {Math.Round(bearing.Value)}° from true north  ·  {Math.Round(distance ?? 0):N0} km to Mecca";
+            : Strings.Get("qibla_line",
+                Ltr(Math.Round(bearing.Value).ToString(CultureInfo.InvariantCulture)),
+                Ltr(Math.Round(distance ?? 0).ToString("N0", CultureInfo.InvariantCulture)));
 
         UpdateCountdown();
     }
@@ -105,7 +116,7 @@ public partial class MainWindow : Window
 
         var label = new TextBlock
         {
-            Text = slot.Notifies ? slot.Label : "☀  " + slot.Label,
+            Text = slot.Label,
             Foreground = brush,
             FontSize = 16,
             FontWeight = isNext ? FontWeights.SemiBold : FontWeights.Normal,
@@ -124,7 +135,7 @@ public partial class MainWindow : Window
 
         var clock = new TextBlock
         {
-            Text = time.ToString("h:mm tt", CultureInfo.CurrentCulture),
+            Text = Clock(time),
             Foreground = brush,
             FontSize = 16,
             FontWeight = isNext ? FontWeights.SemiBold : FontWeights.Normal,
@@ -148,9 +159,9 @@ public partial class MainWindow : Window
         var mode = App.Settings.ModeFor(slot.Name);
         var (glyph, text, brush) = mode switch
         {
-            AthanMode.Sound => ("", "Sound", (Brush)FindResource("Accent")),
-            AthanMode.Popup => ("", "Popup", (Brush)FindResource("Sunrise")),
-            _ => ("", "Silent", (Brush)FindResource("IconIdle")),
+            AthanMode.Sound => ("", Strings.Get("mode_sound"), (Brush)FindResource("Accent")),
+            AthanMode.Popup => ("", Strings.Get("mode_popup"), (Brush)FindResource("Sunrise")),
+            _ => ("", Strings.Get("mode_silent"), (Brush)FindResource("IconIdle")),
         };
 
         var panel = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center };
@@ -204,11 +215,26 @@ public partial class MainWindow : Window
         if (left <= TimeSpan.Zero) { Refresh(); return; }
 
         var text = left.TotalHours >= 1
-            ? $"{(int)left.TotalHours}h {left.Minutes:00}m"
-            : $"{left.Minutes}m {left.Seconds:00}s";
-        NextPrayer.Text = $"{next.Slot.Label} in {text}";
-        NextAt.Text = $"at {next.Time:h:mm tt}";
+            ? Strings.Get("countdown_hm", (int)left.TotalHours, left.Minutes)
+            : Strings.Get("countdown_ms", left.Minutes, left.Seconds);
+        NextPrayer.Text = Strings.Get("next_in", next.Slot.Label, text);
+        NextAt.Text = Strings.Get("at_time", Clock(next.Time));
     }
+
+    /// <summary>
+    /// A clock time, fenced against bidi reordering. Latin digits inside an
+    /// Arabic (right-to-left) line get their parts reversed - "1:09 PM" comes
+    /// out as "PM 1:09" - so the run is wrapped in left-to-right marks.
+    /// </summary>
+    private static string Clock(DateTime t) =>
+        Ltr(t.ToString("h:mm tt", CultureInfo.InvariantCulture));
+
+    /// <summary>Fences a Latin run so RTL layout cannot reorder it.</summary>
+    public static string Ltr(string s) =>
+        Strings.IsArabic ? Lrm + s + Lrm : s;
+
+    /// <summary>U+200E. Written as an escape because it is invisible in source.</summary>
+    private const string Lrm = "‎";
 
     /// <summary>Windows ships the Umm al-Qura calendar, so this stays offline.</summary>
     private static string HijriToday()
@@ -261,4 +287,87 @@ public partial class MainWindow : Window
     /// </summary>
     private void Test_Click(object sender, RoutedEventArgs e) =>
         ((App)Application.Current).FireAthan(Slot.Dhuhr, force: true);
+
+    private void Morning_Click(object sender, RoutedEventArgs e) =>
+        new AdhkarWindow(AdhkarSitting.Morning) { Owner = this }.ShowDialog();
+
+    private void Evening_Click(object sender, RoutedEventArgs e) =>
+        new AdhkarWindow(AdhkarSitting.Evening) { Owner = this }.ShowDialog();
+
+    private void Ramadan_Click(object sender, RoutedEventArgs e) =>
+        ((App)Application.Current).ShowRamadan(RamadanCalendar.UpcomingHijriYear());
+
+    /// <summary>
+    /// One button rather than a two-state switch: on a window this size a pill
+    /// would cost a row, and there are only ever two languages to move between.
+    /// </summary>
+    private void Language_Click(object sender, RoutedEventArgs e)
+    {
+        App.Settings.Language = Strings.IsArabic ? "en" : "ar";
+        App.Settings.Save();
+        ApplyLanguage();
+        Refresh();
+    }
+
+    /// <summary>
+    /// Re-labels everything and flips the window's direction. WPF has no
+    /// equivalent of recreating an activity, so the labels are set from code
+    /// rather than bound in XAML - which also keeps them in one place.
+    /// </summary>
+    public void ApplyLanguage()
+    {
+        FlowDirection = Strings.Flow;
+        SettingsButton.Content = Strings.Get("settings");
+        CreditsButton.Content = Strings.Get("credits_short");
+        TestButton.Content = Strings.Get("test_athan");
+        MorningButton.Content = Strings.Get("adhkar_morning_short");
+        EveningButton.Content = Strings.Get("adhkar_evening_short");
+        RamadanButton.Content = Strings.Get("ramadan_short");
+        NextLabel.Text = Strings.Get("next_prayer");
+        // The button offers the other language, so it is always readable by
+        // someone who cannot read the one currently on screen.
+        LanguageButton.Content = Strings.IsArabic
+            ? Strings.Get("lang_english")
+            : Strings.Get("lang_arabic");
+    }
+
+    /// <summary>
+    /// Asked once, before a single coordinate leaves this PC. Returns true if
+    /// the question was put, so the caller leaves the user alone this time.
+    /// </summary>
+    public bool AskAboutTemperature()
+    {
+        if (App.Settings.WeatherNoticeSeen || !App.Settings.HasLocation) return false;
+
+        var answer = MessageBox.Show(
+            Strings.Get("temperature_notice_body"),
+            Strings.Get("temperature_notice_title"),
+            MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+        App.Settings.WeatherNoticeSeen = true;
+        App.Settings.WeatherEnabled = answer == MessageBoxResult.Yes;
+        App.Settings.Save();
+        if (!App.Settings.WeatherEnabled) Weather.Forget();
+        Refresh();
+        return true;
+    }
+
+    private void ShowTemperature()
+    {
+        var reading = Weather.Current;
+        if (reading is null || !App.Settings.WeatherEnabled)
+        {
+            TemperatureBox.Visibility = Visibility.Collapsed;
+            return;
+        }
+        Temperature.Text = Ltr(Weather.Format(reading, App.Settings.Fahrenheit));
+        TemperatureBox.Visibility = Visibility.Visible;
+    }
+
+    private void Temperature_Click(object sender, MouseButtonEventArgs e)
+    {
+        App.Settings.Fahrenheit = !App.Settings.Fahrenheit;
+        App.Settings.Save();
+        ShowTemperature();
+    }
 }

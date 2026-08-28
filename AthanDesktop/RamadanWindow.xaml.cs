@@ -84,7 +84,7 @@ public partial class RamadanWindow : Window
 
         Preview.Children.Add(BuildRow(
             new[] { "Ramadan", "Date", "Suhoor ends", "Sunrise", "Dhuhr", "Asr", "Iftar", "Isha" },
-            heading: true, friday: false));
+            heading: true, friday: false, today: false));
         foreach (var d in _days)
         {
             Preview.Children.Add(BuildRow(new[]
@@ -93,7 +93,9 @@ public partial class RamadanWindow : Window
                 d.Date.ToString("ddd, d MMM"),
                 Time(d.Fajr), Time(d.Sunrise), Time(d.Dhuhr),
                 Time(d.Asr), Time(d.Maghrib), Time(d.Isha),
-            }, heading: false, friday: d.Date.DayOfWeek == DayOfWeek.Friday));
+            }, heading: false,
+               friday: d.Date.DayOfWeek == DayOfWeek.Friday,
+               today: d.Date.Date == DateTime.Today));
         }
     }
 
@@ -102,7 +104,7 @@ public partial class RamadanWindow : Window
     /// <summary>Same column weights as the document, so the preview is honest.</summary>
     private static readonly int[] Weights = { 8, 15, 16, 12, 12, 12, 16, 12 };
 
-    private UIElement BuildRow(IReadOnlyList<string> cells, bool heading, bool friday)
+    private UIElement BuildRow(IReadOnlyList<string> cells, bool heading, bool friday, bool today = false)
     {
         var grid = new Grid();
         foreach (var w in Weights)
@@ -117,8 +119,11 @@ public partial class RamadanWindow : Window
                 Text = cells[i],
                 FontSize = heading ? 11.5 : 12.5,
                 FontWeight = heading || key ? FontWeights.SemiBold : FontWeights.Normal,
+                // On the highlighted row the dim greys and the accent both
+                // lose their contrast, so everything in it goes to one colour.
                 Foreground = heading
                     ? (Brush)FindResource("TextDim")
+                    : today ? (Brush)FindResource("TodayText")
                     : key ? (Brush)FindResource("Accent") : (Brush)FindResource("Text"),
                 VerticalAlignment = VerticalAlignment.Center,
             };
@@ -129,8 +134,11 @@ public partial class RamadanWindow : Window
         return new Border
         {
             Child = grid,
+            // Today first, then Fridays. During the month the row you want is
+            // today's, and it has to be findable without reading a date.
             Background = heading ? Brushes.Transparent
-                : friday ? (Brush)FindResource("SurfaceHi")
+                : today ? (Brush)FindResource("TodayRow")
+                : friday ? (Brush)FindResource("FridayRow")
                 : Brushes.Transparent,
             CornerRadius = new CornerRadius(6),
             Padding = new Thickness(10, heading ? 8 : 6, 10, heading ? 8 : 6),

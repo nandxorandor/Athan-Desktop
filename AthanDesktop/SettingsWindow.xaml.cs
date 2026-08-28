@@ -29,6 +29,10 @@ public partial class SettingsWindow : Window
         ShowOnStartupCheck.IsChecked = App.Settings.ShowWindowOnStartup;
         RamadanPromptCheck.IsChecked = App.Settings.RamadanPromptEnabled;
         DuaCheck.IsChecked = App.Settings.AfterAthanDuaEnabled;
+        WeatherCheck.IsChecked = App.Settings.WeatherEnabled;
+        UnitCelsius.IsChecked = !App.Settings.Fahrenheit;
+        UnitFahrenheit.IsChecked = App.Settings.Fahrenheit;
+        SyncUnitState();
         ReminderCheck.IsChecked = App.Settings.ReminderEnabled;
 
         foreach (var m in new[] { 5, 10, 15, 20, 30 })
@@ -140,6 +144,35 @@ public partial class SettingsWindow : Window
             if ((int)item.Tag! == minutes) { ReminderMinutesBox.SelectedItem = item; return; }
         }
         if (ReminderMinutesBox.Items.Count > 0) ReminderMinutesBox.SelectedIndex = 1;
+    }
+
+    /// <summary>
+    /// Units mean nothing while the feature is off, so they are greyed out
+    /// rather than letting someone set a preference that does not apply.
+    /// </summary>
+    private void SyncUnitState()
+    {
+        var on = WeatherCheck.IsChecked == true;
+        UnitCelsius.IsEnabled = on;
+        UnitFahrenheit.IsEnabled = on;
+    }
+
+    private void Weather_Changed(object sender, RoutedEventArgs e)
+    {
+        SyncUnitState();
+        if (_loading) return;
+        App.Settings.WeatherEnabled = WeatherCheck.IsChecked == true;
+        // Answered here, so the main window never asks again.
+        App.Settings.WeatherNoticeSeen = true;
+        App.Settings.Save();
+        if (!App.Settings.WeatherEnabled) Weather.Forget();
+    }
+
+    private void Units_Changed(object sender, RoutedEventArgs e)
+    {
+        if (_loading) return;
+        App.Settings.Fahrenheit = UnitFahrenheit.IsChecked == true;
+        App.Settings.Save();
     }
 
     private void Dua_Changed(object sender, RoutedEventArgs e)
