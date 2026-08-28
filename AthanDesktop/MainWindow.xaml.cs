@@ -362,7 +362,11 @@ public partial class MainWindow : Window
             TemperatureBox.Visibility = Visibility.Collapsed;
             return;
         }
-        Temperature.Text = Ltr(Weather.Format(reading, App.Settings.Fahrenheit));
+        // The symbol leads: the sky is what you take in at a glance, and the
+        // number is what you read second. The degrees are fenced against bidi
+        // reordering; the symbol is neutral either way.
+        var degrees = Ltr(Weather.Format(reading, App.Settings.Fahrenheit));
+        Temperature.Text = reading.Symbol.Length == 0 ? degrees : reading.Symbol + " " + degrees;
         TemperatureBox.Visibility = Visibility.Visible;
     }
 

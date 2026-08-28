@@ -18,7 +18,15 @@ namespace AthanDesktop;
 /// </summary>
 public static class Weather
 {
-    public record Reading(double Celsius, DateTime TakenAt);
+    /// <summary>
+    /// A reading. <c>Code</c> is the WMO weather code for current conditions;
+    /// <c>RainComing</c> is set when the next few hours hold rain or snow that
+    /// is not already falling.
+    /// </summary>
+    public record Reading(double Celsius, DateTime TakenAt, int Code = -1, bool RainComing = false)
+    {
+        public string Symbol => WeatherSymbol.For(Code, RainComing);
+    }
 
     /// <summary>
     /// Half an hour. The temperature outside does not change faster than that
@@ -57,14 +65,23 @@ public static class Weather
             var url = string.Format(
                 CultureInfo.InvariantCulture,
                 "https://api.open-meteo.com/v1/forecast" +
-                "?latitude={0:0.####}&longitude={1:0.####}&current=temperature_2m",
+                "?latitude={0:0.####}&longitude={1:0.####}" +
+                "&current=temperature_2m,weather_code" +
+                // Six hours is far enough ahead to be worth knowing and near
+                // enough to still be true. One request, not two.
+                "&hourly=weather_code&forecast_hours=6",
                 settings.Latitude, settings.Longitude);
 
             var body = await Http.GetStringAsync(url).ConfigureAwait(true);
-            var celsius = JsonDocument.Parse(body)
-                .RootElement.GetProperty("current").GetProperty("temperature_2m").GetDouble();
+            var root = JsonDocument.Parse(body).RootElement;
+            var current = root.GetProperty("current");
+            var celsius = current.GetProperty("temperature_2m").GetDouble();
+            var code = current.TryGetProperty("weather_code", out var c) ? c.GetInt32() : -1;
 
-            _cached = new Reading(celsius, DateTime.UtcNow);
+            // Only worth flagging when nothing is falling already: an umbrella
+            // beside a rain cloud tells you nothing new.
+            _cached = new Reading(celsius, DateTime.UtcNow, code,
+                !WeatherSymbol.IsWet(code) && RainAhead(root));
             onResult(_cached);
         }
         catch
@@ -76,6 +93,22 @@ public static class Weather
         {
             _inFlight = false;
         }
+    }
+
+    /// <summary>True if any of the next few hours forecasts something falling.</summary>
+    private static bool RainAhead(JsonElement root)
+    {
+        try
+        {
+            foreach (var hour in root.GetProperty("hourly").GetProperty("weather_code").EnumerateArray())
+                if (WeatherSymbol.IsWet(hour.GetInt32())) return true;
+        }
+        catch
+        {
+            // The forecast is a bonus on top of the reading; losing it is not
+            // a reason to lose the temperature too.
+        }
+        return false;
     }
 
     /// <summary>Formatted for display, in the user's chosen unit.</summary>
