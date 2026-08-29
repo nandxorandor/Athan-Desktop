@@ -162,13 +162,18 @@ public static class Strings
         ["other_prayers"] = ("Other prayers", "باقي الصلوات"),
         ["reminder_enable_win"] = ("Show a heads-up before each prayer", "إظهار تنبيه قبل كل صلاة"),
         ["reminder_preview"] = ("Show me what it looks like", "أرِني كيف يبدو"),
-        ["reminder_explainer_win"] = ("A silent popup so you can finish what you are doing. It closes itself after ten seconds.", "نافذة صامتة تتيح لك إنهاء ما بيدك، وتغلق نفسها بعد عشر ثوانٍ."),
+        ["reminder_explainer_win"] = ("A popup so you can finish what you are doing. It closes itself after ten seconds, and is silent unless you turn on the sound below.", "نافذة تتيح لك إنهاء ما بيدك، وتغلق نفسها بعد عشر ثوانٍ. وهي صامتة ما لم تُفعّل الصوت أدناه."),
         ["startup_explainer"] = ("Athan sits in the notification area, so prayers are called without you opening it. It keeps running there when you close the main window.", "يبقى التطبيق في شريط الإشعارات، فتُرفع الصلوات دون أن تفتحه. ويظل يعمل هناك بعد إغلاق النافذة الرئيسية."),
         ["show_window_explainer"] = ("Untick to have Athan start quietly in the notification area, with no window on your desktop.", "أزل التحديد ليبدأ التطبيق بهدوء في شريط الإشعارات دون نافذة على سطح المكتب."),
         ["ramadan_open"] = ("Ramadan calendar…", "تقويم رمضان…"),
         ["ramadan_auto_explainer"] = ("Asks once, in the fortnight before the first fast, whether you want the month's timetable. Dismissing it only silences that year.", "يسأل مرة واحدة في الأسبوعين السابقين لأول صوم إن كنت تريد جدول الشهر. وتجاهله يُسكته لذلك العام فقط."),
         ["about_athan"] = ("About Athan", "عن التطبيق"),
         ["method_label"] = ("Method", "الطريقة"),
+        ["reminder_sound_enable"] = ("Play a sound with the heads-up", "تشغيل صوت مع التنبيه"),
+        ["reminder_sound_explainer"] = ("Off by default. Choose any audio file — some people set a hadith urging them to come early to the row, so everyone in the room gets ready.", "متوقّف افتراضيًّا. اختر أي ملف صوتي — وبعض الناس يضع حديثًا في فضل التبكير والصفّ الأول، فيستعدّ كلّ من في المجلس."),
+        ["reminder_sound_choose"] = ("Choose a sound file…", "اختيار ملف صوتي…"),
+        ["reminder_sound_default"] = ("System notification sound", "صوت الإشعار الافتراضي"),
+        ["reminder_sound_system"] = ("Use the system sound", "استعمال صوت النظام"),
     };
 
     /// <summary>The chosen language, following Windows until the user picks one.</summary>

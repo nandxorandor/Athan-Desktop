@@ -30,6 +30,8 @@ public partial class SettingsWindow : Window
         RamadanPromptCheck.IsChecked = App.Settings.RamadanPromptEnabled;
         ApplyLanguage();
         DuaCheck.IsChecked = App.Settings.AfterAthanDuaEnabled;
+        ReminderSoundCheck.IsChecked = App.Settings.ReminderSoundEnabled;
+        RefreshReminderSound();
         WeatherCheck.IsChecked = App.Settings.WeatherEnabled;
         UnitCelsius.IsChecked = !App.Settings.Fahrenheit;
         UnitFahrenheit.IsChecked = App.Settings.Fahrenheit;
@@ -173,6 +175,10 @@ public partial class SettingsWindow : Window
         ReminderCheck.Content = Strings.Get("reminder_enable_win");
         ExpReminder.Text = Strings.Get("reminder_explainer_win");
         ReminderPreviewLbl.Content = Strings.Get("reminder_preview");
+        ReminderSoundCheck.Content = Strings.Get("reminder_sound_enable");
+        ExpReminderSound.Text = Strings.Get("reminder_sound_explainer");
+        ReminderSoundBtn.Content = Strings.Get("reminder_sound_choose");
+        ReminderSoundSystemBtn.Content = Strings.Get("reminder_sound_system");
 
         LblMethod.Text = Strings.Get("method_label");
         LblAsrMethod.Text = Strings.Get("juristic_method");
@@ -206,6 +212,56 @@ public partial class SettingsWindow : Window
         var on = WeatherCheck.IsChecked == true;
         UnitCelsius.IsEnabled = on;
         UnitFahrenheit.IsEnabled = on;
+    }
+
+    /// <summary>The chosen file's name, or the system sound when none is set.</summary>
+    private void RefreshReminderSound()
+    {
+        var path = App.Settings.ReminderSoundPath;
+        ReminderSoundName.Text = string.IsNullOrWhiteSpace(path)
+            ? Strings.Get("reminder_sound_default")
+            : System.IO.Path.GetFileName(path);
+
+        // The button is disabled while the sound is off - there is nothing to
+        // choose for - but the name beside it is not a control, it is a
+        // statement of what is currently selected. Dimming it made it read as
+        // broken, so it keeps full contrast either way.
+        var soundOn = ReminderSoundCheck.IsChecked == true;
+        ReminderSoundBtn.IsEnabled = soundOn;
+        // Only offer the way back when there is something to go back from.
+        ReminderSoundSystemBtn.IsEnabled = soundOn && !string.IsNullOrWhiteSpace(path);
+    }
+
+    private void ReminderSound_Changed(object sender, RoutedEventArgs e)
+    {
+        RefreshReminderSound();
+        if (_loading) return;
+        App.Settings.ReminderSoundEnabled = ReminderSoundCheck.IsChecked == true;
+        App.Settings.Save();
+    }
+
+    private void PickReminderSound_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = Strings.Get("reminder_sound_choose"),
+            Filter = "Audio files|*.mp3;*.wav;*.m4a;*.aac;*.wma;*.ogg|All files|*.*",
+            CheckFileExists = true,
+        };
+        if (dialog.ShowDialog(this) != true) return;
+        App.Settings.ReminderSoundPath = dialog.FileName;
+        App.Settings.Save();
+        RefreshReminderSound();
+        // Play it once so the choice is heard, not just read.
+        ReminderSound.Play(App.Settings);
+    }
+
+    private void UseSystemSound_Click(object sender, RoutedEventArgs e)
+    {
+        App.Settings.ReminderSoundPath = "";
+        App.Settings.Save();
+        RefreshReminderSound();
+        ReminderSound.Play(App.Settings);
     }
 
     private void Weather_Changed(object sender, RoutedEventArgs e)

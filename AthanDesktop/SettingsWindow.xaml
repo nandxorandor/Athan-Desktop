@@ -45,6 +45,21 @@
                         <TextBlock x:Name="ReminderMinutesLabel" Style="{StaticResource Dim}" Margin="0,16,0,0"/>
                         <ComboBox x:Name="ReminderMinutesBox" SelectionChanged="ReminderMinutes_Changed"
                                   Margin="0,6,0,0"/>
+                        <CheckBox x:Name="ReminderSoundCheck" Margin="0,14,0,0"
+                                  Checked="ReminderSound_Changed" Unchecked="ReminderSound_Changed"/>
+                        <TextBlock x:Name="ExpReminderSound" Style="{StaticResource Dim}"
+                                   TextWrapping="Wrap" Margin="30,6,0,0"
+                                   Foreground="{StaticResource TextFaint}"/>
+                        <Button x:Name="ReminderSoundBtn" Style="{StaticResource RowButton}"
+                                Margin="30,8,0,0" Click="PickReminderSound_Click"/>
+                        <!-- The way back: without this a chosen file could
+                             never be cleared, only replaced. -->
+                        <Button x:Name="ReminderSoundSystemBtn" Style="{StaticResource RowButton}"
+                                Margin="30,6,0,0" Click="UseSystemSound_Click"/>
+                        <TextBlock x:Name="ReminderSoundName" Style="{StaticResource Dim}"
+                                   TextWrapping="Wrap" Margin="30,4,0,0"
+                                   Foreground="{StaticResource Accent}"/>
+
                         <Button x:Name="ReminderPreviewLbl" Style="{StaticResource RowButton}"
                                 Click="PreviewReminder_Click" Margin="0,10,0,0"/>
                     </StackPanel>

@@ -81,6 +81,20 @@ public class Settings
     public int ReminderMinutes { get; set; } = 10;
 
     /// <summary>
+    /// Whether the heads-up makes a sound. Off by default: it has always been
+    /// a silent popup, and a PC that starts making noise in a meeting because
+    /// of an update is a fair complaint.
+    /// </summary>
+    public bool ReminderSoundEnabled { get; set; }
+
+    /// <summary>
+    /// The file the heads-up plays. Empty means the system's own notification
+    /// sound. People often want something with meaning in it here — a hadith
+    /// urging them to come early, a du'aa — so any audio file will do.
+    /// </summary>
+    public string ReminderSoundPath { get; set; } = "";
+
+    /// <summary>
     /// The du'aa said after the athan, played once the recording ends. On by
     /// default because it is the natural companion to the call, and one toggle
     /// away for anyone who would rather it did not.

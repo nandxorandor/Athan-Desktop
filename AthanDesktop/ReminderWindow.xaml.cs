@@ -32,6 +32,9 @@ public partial class ReminderWindow : Window
             else UpdateButton();
         };
         _countdown.Start();
+
+        // Off unless the user asked for it; see Settings.ReminderSoundEnabled.
+        ReminderSound.Play(App.Settings);
     }
 
     private void UpdateButton() => CloseButton.Content = $"Close  ({_secondsLeft})";
@@ -41,6 +44,9 @@ public partial class ReminderWindow : Window
     protected override void OnClosed(EventArgs e)
     {
         _countdown.Stop();
+        // The window closes itself after ten seconds; a longer recording must
+        // not carry on playing to an empty desktop.
+        ReminderSound.Stop();
         base.OnClosed(e);
     }
 }
