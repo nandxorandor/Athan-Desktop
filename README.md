@@ -76,6 +76,9 @@ agree to the minute.
   Stop button.
 - **Three modes per prayer**, clicked on the row itself:
   **Sound** (window and recording) · **Popup** (window only) · **Silent** (nothing).
+- **Pre-prayer heads-up**, anywhere from 1 to 60 minutes before, so there is time
+  to finish what you are doing. Its own sound and its own volume, separate from
+  the athan's.
 - **Runs in the notification area.** Closing the window does not quit it; it
   keeps waiting for the next prayer. Starts with Windows by default and opens
   the window when it does — Settings has a checkbox for each, so it can start
@@ -158,6 +161,9 @@ and never leave the machine.
 `%APPDATA%\Athan\settings.json` — deliberately not next to the exe, so you can
 move `Athan.exe` anywhere without losing your location or sound choices.
 
+If something ever goes wrong, `%APPDATA%\Athan\crash.log` records it. It is
+written only when there is a fault to report, and it is safe to delete.
+
 If you enable "start when I sign in", that is an ordinary `Run` entry under
 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`, visible and removable in
 Task Manager's Startup tab. It stores the exe's path, so run Athan once from its
@@ -200,7 +206,7 @@ app's assets, index and all, so both platforms ship the same catalogue.
 |---|---|---|
 | Qibla | live compass | bearing in degrees (a PC has no magnetometer) |
 | Vibrate mode | yes | replaced by **Popup** — window, no sound |
-| Pre-prayer heads-up | yes | not yet |
+| Pre-prayer heads-up | yes | yes |
 | Downloaded athans | browse and import | pick any MP3 on the PC |
 | Ramadan calendar | — | one-page `.docx` or `.csv`, offered each Ramadan |
 
