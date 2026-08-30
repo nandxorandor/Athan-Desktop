@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using Batoulapps.Adhan;
 
@@ -38,9 +38,8 @@ public partial class SettingsWindow : Window
         SyncUnitState();
         ReminderCheck.IsChecked = App.Settings.ReminderEnabled;
 
-        foreach (var m in new[] { 5, 10, 15, 20, 30 })
-            ReminderMinutesBox.Items.Add(new ComboBoxItem { Content = $"{m} minutes before", Tag = m });
         SelectMinutes(App.Settings.ReminderMinutes);
+        ReminderVolumeSlider.Value = App.Settings.ReminderVolume;
 
         _loading = false;
         Refresh();
@@ -52,8 +51,12 @@ public partial class SettingsWindow : Window
         OtherSoundButton.Content = App.Catalog.LabelFor(App.Catalog.ResolveGeneral(App.Settings));
         VolumeLabel.Text = $"Volume — {App.Settings.Volume}%";
         RamadanWhen.Text = RamadanSummary();
-        ReminderMinutesLabel.Text = "How early";
-        ReminderMinutesBox.IsEnabled = App.Settings.ReminderEnabled;
+        ReminderMinutesLabel.Text = $"How early — {App.Settings.ReminderMinutes} min";
+        ReminderMinutesSlider.IsEnabled = App.Settings.ReminderEnabled;
+        ReminderVolumeLabel.Text = $"Heads-up volume — {App.Settings.ReminderVolume}%";
+        // The volume only matters when the heads-up makes a sound at all.
+        ReminderVolumeSlider.IsEnabled =
+            App.Settings.ReminderEnabled && App.Settings.ReminderSoundEnabled;
         // Nothing to decide about a window at login if there is no launch at login.
         ShowOnStartupCheck.IsEnabled = StartupCheck.IsChecked == true;
         AdjustLabel.Text = App.Settings.AdjustmentMinutes switch
@@ -140,14 +143,9 @@ public partial class SettingsWindow : Window
         App.Settings.Save();
     }
 
-    private void SelectMinutes(int minutes)
-    {
-        foreach (ComboBoxItem item in ReminderMinutesBox.Items)
-        {
-            if ((int)item.Tag! == minutes) { ReminderMinutesBox.SelectedItem = item; return; }
-        }
-        if (ReminderMinutesBox.Items.Count > 0) ReminderMinutesBox.SelectedIndex = 1;
-    }
+    private void SelectMinutes(int minutes) =>
+        ReminderMinutesSlider.Value =
+            Math.Clamp(minutes, Settings.MinReminder, Settings.MaxReminder);
 
     /// <summary>
     /// Every label on this window, set from the string table rather than left
@@ -297,11 +295,21 @@ public partial class SettingsWindow : Window
         Refresh();
     }
 
-    private void ReminderMinutes_Changed(object sender, SelectionChangedEventArgs e)
+    private void ReminderMinutes_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
+        var minutes = (int)Math.Round(ReminderMinutesSlider.Value);
+        ReminderMinutesLabel.Text = $"How early — {minutes} min";
         if (_loading) return;
-        if ((ReminderMinutesBox.SelectedItem as ComboBoxItem)?.Tag is not int minutes) return;
         App.Settings.ReminderMinutes = minutes;
+        App.Settings.Save();
+    }
+
+    private void ReminderVolume_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        var v = (int)Math.Round(ReminderVolumeSlider.Value);
+        ReminderVolumeLabel.Text = $"Heads-up volume — {v}%";
+        if (_loading) return;
+        App.Settings.ReminderVolume = v;
         App.Settings.Save();
     }
 

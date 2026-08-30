@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -16,7 +16,7 @@
     <ApplicationIcon>Assets\athan.ico</ApplicationIcon>
     <AssemblyName>Athan</AssemblyName>
     <RootNamespace>AthanDesktop</RootNamespace>
-    <Version>1.3.2</Version>
+    <Version>1.3.3</Version>
     <Product>Athan</Product>
     <Company>Ahmed Khalaf</Company>
 
@@ -54,3 +54,4 @@
   </ItemGroup>
 
 </Project>
+

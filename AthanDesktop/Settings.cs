@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -44,6 +44,14 @@ public class Settings
     /// <summary>0-100, scaling this app's own output only.</summary>
     public int Volume { get; set; } = 100;
 
+    /// <summary>
+    /// The heads-up's own loudness, 0-100, deliberately separate from
+    /// <see cref="Volume"/>. The athan has to carry across a room; the heads-up
+    /// only has to be noticed by whoever is at the machine. One shared slider
+    /// suited neither.
+    /// </summary>
+    public int ReminderVolume { get; set; } = 70;
+
     public string FajrSound { get; set; } = "";
     public string OtherSound { get; set; } = "";
 
@@ -79,6 +87,10 @@ public class Settings
 
     /// <summary>How many minutes before the prayer the heads-up appears.</summary>
     public int ReminderMinutes { get; set; } = 10;
+
+    /// <summary>The heads-up slider's bounds. Zero would mean "at the prayer".</summary>
+    public const int MinReminder = 1;
+    public const int MaxReminder = 60;
 
     /// <summary>
     /// Whether the heads-up makes a sound. Off by default: it has always been
@@ -129,9 +141,12 @@ public class Settings
     /// </summary>
     public bool WeatherNoticeSeen { get; set; }
 
-    /// <summary>Fahrenheit rather than Celsius.</summary>
-    public bool Fahrenheit { get; set; } = RegionInfo.CurrentRegion.Name is
-        "US" or "LR" or "MM" or "BS" or "BZ" or "KY" or "PW";
+    /// <summary>
+    /// Fahrenheit rather than Celsius. Celsius everywhere by default: this used
+    /// to be decided by the PC's region, which meant a US machine could not be
+    /// given a Celsius default at all. Anyone who wants Fahrenheit sets it once.
+    /// </summary>
+    public bool Fahrenheit { get; set; }
 
     [JsonIgnore]
     public bool HasLocation => !double.IsNaN(Latitude) && !double.IsNaN(Longitude);

@@ -1,4 +1,4 @@
-<Window x:Class="AthanDesktop.SettingsWindow"
+﻿<Window x:Class="AthanDesktop.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Settings" Height="660" Width="440"
@@ -42,9 +42,12 @@
                         <TextBlock x:Name="ExpReminder" Style="{StaticResource Dim}" TextWrapping="Wrap" Margin="30,6,0,0"
                                    Foreground="{StaticResource TextFaint}"/>
 
+                        <!-- A slider rather than a fixed list: the same choices
+                             plus everything between, in the same space. -->
                         <TextBlock x:Name="ReminderMinutesLabel" Style="{StaticResource Dim}" Margin="0,16,0,0"/>
-                        <ComboBox x:Name="ReminderMinutesBox" SelectionChanged="ReminderMinutes_Changed"
-                                  Margin="0,6,0,0"/>
+                        <Slider x:Name="ReminderMinutesSlider" Minimum="1" Maximum="60"
+                                TickFrequency="1" IsSnapToTickEnabled="True"
+                                ValueChanged="ReminderMinutes_Changed" Margin="0,6,0,0"/>
                         <CheckBox x:Name="ReminderSoundCheck" Margin="0,14,0,0"
                                   Checked="ReminderSound_Changed" Unchecked="ReminderSound_Changed"/>
                         <TextBlock x:Name="ExpReminderSound" Style="{StaticResource Dim}"
@@ -52,6 +55,12 @@
                                    Foreground="{StaticResource TextFaint}"/>
                         <Button x:Name="ReminderSoundBtn" Style="{StaticResource RowButton}"
                                 Margin="30,8,0,0" Click="PickReminderSound_Click"/>
+                        <!-- Its own volume: the athan carries across a room, the
+                             heads-up only has to reach whoever is at the PC. -->
+                        <TextBlock x:Name="ReminderVolumeLabel" Style="{StaticResource Dim}" Margin="30,14,0,0"/>
+                        <Slider x:Name="ReminderVolumeSlider" Minimum="0" Maximum="100" TickFrequency="5"
+                                IsSnapToTickEnabled="True" ValueChanged="ReminderVolume_Changed"
+                                Margin="30,6,0,0"/>
                         <!-- The way back: without this a chosen file could
                              never be cleared, only replaced. -->
                         <Button x:Name="ReminderSoundSystemBtn" Style="{StaticResource RowButton}"

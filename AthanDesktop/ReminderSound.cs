@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using NAudio.Wave;
 
 namespace AthanDesktop;
@@ -46,7 +46,8 @@ public static class ReminderSound
             {
                 _reader = new AudioFileReader(path)
                 {
-                    Volume = Math.Clamp(settings.Volume / 100f, 0f, 1f),
+                    // The heads-up's own slider, not the athan's.
+                    Volume = Math.Clamp(settings.ReminderVolume / 100f, 0f, 1f),
                 };
                 _output = new WaveOutEvent();
                 _output.Init(_reader);

@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Threading;
 using Microsoft.Win32;
 using Forms = System.Windows.Forms;
@@ -47,6 +47,25 @@ public partial class App : Application
     /// <summary>Catalogue key of the embedded after-athan du'aa.</summary>
     public const string DuaKey = "dua/after-athan-dua.mp3";
 
+    /// <summary>Appends a fault to %APPDATA%\Athan\crash.log, best effort.</summary>
+    public static void LogCrash(Exception? ex)
+    {
+        if (ex is null) return;
+        try
+        {
+            var dir = System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Athan");
+            System.IO.Directory.CreateDirectory(dir);
+            System.IO.File.AppendAllText(
+                System.IO.Path.Combine(dir, "crash.log"),
+                $"---- {DateTime.Now:yyyy-MM-dd HH:mm:ss} ----{Environment.NewLine}{ex}{Environment.NewLine}");
+        }
+        catch
+        {
+            // Logging a crash must never cause one.
+        }
+    }
+
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
@@ -59,11 +78,20 @@ public partial class App : Application
         DispatcherUnhandledException += (_, args) =>
         {
             args.Handled = true;
+            // Written as well as shown: a dialog is dismissed and gone, and a
+            // fault that only happens on someone else's machine is otherwise
+            // impossible to look into. The file sits next to settings.json.
+            LogCrash(args.Exception);
             MessageBox.Show(
                 args.Exception.ToString(),
                 "Athan hit a problem",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
         };
+
+        // Faults off the UI thread never reach the handler above; they end the
+        // process instead. Recording them is the only way to know they happened.
+        AppDomain.CurrentDomain.UnhandledException += (_, args) =>
+            LogCrash(args.ExceptionObject as Exception);
 
         Settings = Settings.Load();
         Catalog = new AthanCatalog();
