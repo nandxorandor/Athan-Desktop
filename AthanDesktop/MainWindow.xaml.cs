@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -47,7 +47,22 @@ public partial class MainWindow : Window
     {
         if (!IsVisible) return;
         UpdateCountdown();
+
+        // The weather used to be fetched only by Refresh(), which runs on a
+        // prayer boundary - so a window left open through a quiet afternoon
+        // outlived its half-hour cache and showed nothing until the next prayer
+        // or a restart. Asking every minute costs nothing: Weather.Refresh
+        // returns immediately while the cached reading is still fresh, so a
+        // request actually leaves the machine only once the cache has expired.
+        if (DateTime.UtcNow - _lastWeatherPoll < WeatherPollEvery) return;
+        _lastWeatherPoll = DateTime.UtcNow;
+        Weather.Refresh(App.Settings, _ => Dispatcher.Invoke(ShowTemperature));
     }
+
+    private DateTime _lastWeatherPoll = DateTime.MinValue;
+
+    /// <summary>How often to consider refetching; the cache decides the rest.</summary>
+    private static readonly TimeSpan WeatherPollEvery = TimeSpan.FromMinutes(1);
 
     public void Refresh()
     {
@@ -356,7 +371,9 @@ public partial class MainWindow : Window
 
     private void ShowTemperature()
     {
-        var reading = Weather.Current;
+        // Last, not Current: a stale reading still beats an empty gap, and the
+        // refresh below replaces it as soon as a new one arrives.
+        var reading = Weather.Last;
         if (reading is null || !App.Settings.WeatherEnabled)
         {
             TemperatureBox.Visibility = Visibility.Collapsed;

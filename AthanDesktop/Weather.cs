@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Net.Http;
 using System.Text.Json;
 
@@ -34,12 +34,24 @@ public static class Weather
     /// </summary>
     private static readonly TimeSpan CacheFor = TimeSpan.FromMinutes(30);
 
+    /// <summary>How far ahead the umbrella looks. Beyond this it is not "soon".</summary>
+    private const int RainWindowHours = 3;
+
     private static readonly HttpClient Http = new() { Timeout = TimeSpan.FromSeconds(5) };
 
     private static Reading? _cached;
     private static bool _inFlight;
 
     /// <summary>The last reading if it is still fresh, else null. Never blocks.</summary>
+    /// <summary>
+    /// The last reading, fresh or not. A temperature half an hour old is still
+    /// worth more than a blank space: the box used to vanish the moment the
+    /// cache expired and stay gone until something else forced a refresh, so an
+    /// app left open for a few hours simply lost its temperature.
+    /// </summary>
+    public static Reading? Last => _cached;
+
+    /// <summary>The reading if it is still fresh; null once it needs refetching.</summary>
     public static Reading? Current =>
         _cached is { } r && DateTime.UtcNow - r.TakenAt < CacheFor ? r : null;
 
@@ -95,13 +107,26 @@ public static class Weather
         }
     }
 
-    /// <summary>True if any of the next few hours forecasts something falling.</summary>
+    /// <summary>
+    /// True if rain is close enough and heavy enough to be worth an umbrella.
+    ///
+    /// This used to flag any wet code anywhere in the six-hour window, which put
+    /// an umbrella over a cloudy afternoon because one hour near the end of the
+    /// forecast showed light drizzle. "Soon" has to mean soon: only the next
+    /// three hours count, and the lightest drizzle codes (51-55) do not - they
+    /// are the ones that most often never arrive.
+    /// </summary>
     private static bool RainAhead(JsonElement root)
     {
         try
         {
+            var hours = 0;
             foreach (var hour in root.GetProperty("hourly").GetProperty("weather_code").EnumerateArray())
-                if (WeatherSymbol.IsWet(hour.GetInt32())) return true;
+            {
+                if (hours++ >= RainWindowHours) break;
+                var code = hour.GetInt32();
+                if (WeatherSymbol.IsWet(code) && code is not (>= 51 and <= 55)) return true;
+            }
         }
         catch
         {
